@@ -34,9 +34,9 @@ namespace MasterBlaster
             this.angle = angle = 180.0f;
             for (int i = 0; i < size; i++)
             {
-                float a_rand = common.rand.Next() % 110 - 55; //range -45,45
-                end[i, 0] = len * (float)Math.Cos((angle + a_rand) * common.PI / 180.0f);
-                end[i, 1] = len * (float)Math.Sin((angle + a_rand) * common.PI / 180.0f);
+                float a_rand = Engine.rand.Next() % 110 - 55; //range -45,45
+                end[i, 0] = len * (float)Math.Cos((angle + a_rand) * Engine.PI / 180.0f);
+                end[i, 1] = len * (float)Math.Sin((angle + a_rand) * Engine.PI / 180.0f);
 
             }
         }

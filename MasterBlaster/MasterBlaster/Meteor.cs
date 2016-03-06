@@ -85,7 +85,7 @@ namespace MasterBlaster
         private bool isWithinPos(float x, float y, float posx, float posy)
         {
             //check if inside the possible radius of the meteor
-            if (common.dist2(posx, posy, x, y) < (rad + 0.5f * rad))
+            if (Engine.dist2(posx, posy, x, y) < (rad + 0.5f * rad))
             {
                 //check each triangluar wedge
                 Vector2 A = new Vector2(posx, posy);
@@ -126,22 +126,22 @@ namespace MasterBlaster
         }
 
         //this is used to put an impulse on the meteor
-        public void blast(float angle, float blastamt = common.METEOR_BLAST)
+        public void blast(float angle, float blastamt = Engine.METEOR_BLAST)
         {
             this.angle = angle;
             this.blastamt = blastamt;
         }
 
         //compute the next position of the meteor
-        public void nextframe(float dt = common.DT)
+        public void nextframe(float dt = Engine.DT)
         {
 
-            this.blastamt *= 1.0f - common.METEOR_DRAG;
+            this.blastamt *= 1.0f - Engine.METEOR_DRAG;
 
             this.blastamt /= mass;
 
-            float fx = blastamt * (float)Math.Cos(angle * common.PI / 180f);
-            float fy = blastamt * (float)Math.Sin(angle * common.PI / 180f);
+            float fx = blastamt * (float)Math.Cos(angle * Engine.PI / 180f);
+            float fy = blastamt * (float)Math.Sin(angle * Engine.PI / 180f);
 
 
             float ax = fx / size;
@@ -154,9 +154,9 @@ namespace MasterBlaster
             vx += dvx;
             vy += dvy;
 
-            if (vx > common.MAX_VEL)
+            if (vx > Engine.MAX_VEL)
                 vx = .05f;
-            if (vy > common.MAX_VEL)
+            if (vy > Engine.MAX_VEL)
                 vy = .05f;
 
 
@@ -165,8 +165,8 @@ namespace MasterBlaster
             dsy = vy * dt;
 
             //compute the new positions and check if off the edge of the screen.
-            pos[0] = common.glrange(pos[0] + dsx);
-            pos[1] = common.glrange(pos[1] + dsy);
+            pos[0] = Engine.glrange(pos[0] + dsx);
+            pos[1] = Engine.glrange(pos[1] + dsy);
 
             //reset the off screen shadow origins
             setshadow(pos);
@@ -219,7 +219,7 @@ namespace MasterBlaster
         }
 
 
-        public Meteor(int size = common.METEOR_PTS, float x = 0.0f, float y = 0.0f, float b_angle = 0f)
+        public Meteor(int size = Engine.METEOR_PTS, float x = 0.0f, float y = 0.0f, float b_angle = 0f)
         {
             pts = new float[size, 2];
             pos = new float[2];
@@ -227,11 +227,11 @@ namespace MasterBlaster
 
             this.size = size;
             this.color = Color.White;
-            this.value = common.METEOR_VALUE;
-            this.health = common.METEOR_HEALTH;
+            this.value = Engine.METEOR_VALUE;
+            this.health = Engine.METEOR_HEALTH;
 
-            if (size < common.METEOR_MINSIZE)
-                size = common.METEOR_MINSIZE;
+            if (size < Engine.METEOR_MINSIZE)
+                size = Engine.METEOR_MINSIZE;
 
             pos[0] = x;
             pos[1] = y;
@@ -240,8 +240,8 @@ namespace MasterBlaster
             mass = size;
 
             //health and radius of the meteor are proportional to size
-            rad = 0.2f * ((float)size / common.METEOR_PTS);
-            health = common.METEOR_HEALTH * ((float)size / (float)common.METEOR_PTS);
+            rad = 0.2f * ((float)size / Engine.METEOR_PTS);
+            health = Engine.METEOR_HEALTH * ((float)size / (float)Engine.METEOR_PTS);
 
             //generate the randomized surface of the meteor
             float angle = 0;
@@ -249,10 +249,10 @@ namespace MasterBlaster
             {
                 angle = i * (360 / size);
 
-                float p_rand = ((float)common.rand.NextDouble() * 0.5f + 0.5f) * rad;
+                float p_rand = ((float)Engine.rand.NextDouble() * 0.5f + 0.5f) * rad;
 
-                float p_x = p_rand * (float)Math.Cos(angle * common.PI / 180f);
-                float p_y = p_rand * (float)Math.Sin(angle * common.PI / 180f);
+                float p_x = p_rand * (float)Math.Cos(angle * Engine.PI / 180f);
+                float p_y = p_rand * (float)Math.Sin(angle * Engine.PI / 180f);
 
                 pts[i - 1, 0] = p_x;
                 pts[i - 1, 1] = p_y;
@@ -260,7 +260,7 @@ namespace MasterBlaster
 
             //give the meteor a random starting blast angle
             if (b_angle == 0)
-                b_angle = common.rand.Next() % 360;
+                b_angle = Engine.rand.Next() % 360;
 
             this.blast(b_angle);
 

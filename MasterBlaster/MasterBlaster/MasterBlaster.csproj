@@ -49,13 +49,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
-    <Compile Include="common.cs" />
-    <Compile Include="Component1.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Component1.Designer.cs">
-      <DependentUpon>Component1.cs</DependentUpon>
-    </Compile>
     <Compile Include="Engine.cs" />
     <Compile Include="Explosion.cs" />
     <Compile Include="MBGameWindow.cs" />
