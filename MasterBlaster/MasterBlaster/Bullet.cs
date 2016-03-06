@@ -1,4 +1,4 @@
-﻿using System;
+                                                                                                                                                                                                                                                                                                                        using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,14 +12,14 @@ namespace MasterBlaster
 {
     class Bullet
     {
-        private float[] pos;
-        private float angle;
+        public float[] pos;
+        public float angle;
         private float vel;
         private float ax;
         private float ay;
         private float dist;
         public int health;
-        public float damage;
+        public int damage;
 
         public Bullet(float x, float y, float angle, float vel = common.BULLET_VEL)
         {
@@ -83,4 +83,4 @@ namespace MasterBlaster
         }
 
     }
-}
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

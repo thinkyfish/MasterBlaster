@@ -57,6 +57,7 @@
       <DependentUpon>Component1.cs</DependentUpon>
     </Compile>
     <Compile Include="Engine.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="MBGameWindow.cs" />
     <Compile Include="Meteor.cs" />
     <Compile Include="Program.cs" />
