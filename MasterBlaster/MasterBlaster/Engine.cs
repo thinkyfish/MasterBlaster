@@ -42,7 +42,7 @@ namespace MasterBlaster
         public const float BULLET_VEL = 2.0f;
         public const float BULLET_RANGE = 10f;
         public const int BULLET_DAMAGE = 300;
-        public const int FIRE_CYCLE = 10;
+        public const int FIRE_CYCLE = 100;
         public const float SHIP_TURN = 4.0f;
         public const float SHIP_THRUST = 1.4f;
         public const float SHIP_DRAG = 0.008f;
@@ -124,12 +124,13 @@ namespace MasterBlaster
         public void startfiring()
         {
             //reset bullet cycle
-            bulletcycle = 0;
+            if(!firing)
+                bulletcycle = 0;
             firing = true;
         }
         public void stopfiring()
         {
-            bulletcycle = 0;
+            //bulletcycle = 0;
             firing = false;
         }
         public void fire_bullet() {
