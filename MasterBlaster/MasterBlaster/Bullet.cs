@@ -31,6 +31,7 @@ namespace MasterBlaster
             this.damage = Engine.BULLET_DAMAGE;
             this.health = 1;
         }
+
         public void draw()
         {
             GL.PointSize(Engine.BULLET_SIZE);
@@ -44,7 +45,6 @@ namespace MasterBlaster
         {
 
             //computes the next physics step for the bullet
-
             float dvx, dvy, vx, vy, dsx, dsy, dr;
 
             vx = vel * (float)Math.Cos(angle * Engine.PI / 180f);
@@ -58,7 +58,6 @@ namespace MasterBlaster
 
             vx += dvx;
             vy += dvy;
-
 
             dsx = vx * dt;
             dsy = vy * dt;

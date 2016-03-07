@@ -63,9 +63,11 @@ namespace MasterBlaster
             float dot02 = Vector2.Dot(v0, v2);
             float dot11 = Vector2.Dot(v1, v1);
             float dot12 = Vector2.Dot(v1, v2);
+
             float invDenom = -1.0f / (dot00 * dot11 - dot01 * dot01);
             float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
             float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
             return (u >= 0) && (v >= 0) && (u + v < 1);
         }
 
@@ -82,30 +84,34 @@ namespace MasterBlaster
             }
             return false;
         }
+
+        // check if the given point (x,y) is within the meteor if it were drawn with origin (posx, posy) 
         private bool isWithinPos(float x, float y, float posx, float posy)
         {
             //check if inside the possible radius of the meteor
             if (Engine.dist2(posx, posy, x, y) < (rad + 0.5f * rad))
             {
-                //check each triangluar wedge
                 Vector2 A = new Vector2(posx, posy);
                 Vector2 P = new Vector2(x, y);
                 Vector2 B, C;
 
+                //check the wedges with edge points in the middle of the pts list
                 for (int i = 1; i < size; i++)
                 {
                     B = new Vector2(pts[i, 0]+posx, pts[i, 1]+posy);
                     C = new Vector2(pts[i - 1, 0]+posx, pts[i - 1, 1]+posy);
                     if (intriangle(A, B, C, P))
                         return true;
-
                 }
-                //check the last wedge
+
+                //check the wedge with edge points as the first and last elements of the pts list
                 B = new Vector2(pts[size - 1, 0]+posx, pts[size - 1, 1]+posy);
                 C = new Vector2(pts[0, 0]+posx, pts[0, 1]+posy);
                 if (intriangle(A, B, C, P))
                     return true;
             }
+
+            // no collision found
             return false;
         }
 
@@ -140,33 +146,37 @@ namespace MasterBlaster
 
             this.blastamt /= mass;
 
+            // force values
             float fx = blastamt * (float)Math.Cos(angle * Engine.PI / 180f);
             float fy = blastamt * (float)Math.Sin(angle * Engine.PI / 180f);
 
-
+            // acceleration
             float ax = fx / size;
             float ay = fy / size;
 
+            // change in velocity x and y
             float dvx, dvy;
             dvx = ax * dt;
             dvy = ay * dt;
 
+            // velocity values
             vx += dvx;
             vy += dvy;
 
+            // velocity cap
             if (vx > Engine.MAX_VEL)
                 vx = .05f;
             if (vy > Engine.MAX_VEL)
                 vy = .05f;
 
+            //change in position
+            float dpx, dpy;
+            dpx = vx * dt;
+            dpy = vy * dt;
 
-            float dsx, dsy;
-            dsx = vx * dt;
-            dsy = vy * dt;
-
-            //compute the new positions and check if off the edge of the screen.
-            pos[0] = Engine.glrange(pos[0] + dsx);
-            pos[1] = Engine.glrange(pos[1] + dsy);
+            //compute the new positions and correct if off the edge of the screen.
+            pos[0] = Engine.glrange(pos[0] + dpx);
+            pos[1] = Engine.glrange(pos[1] + dpy);
 
             //reset the off screen shadow origins
             setshadow(pos);
@@ -188,10 +198,10 @@ namespace MasterBlaster
             }
         }
 
-        //draw the meteor at the given position
+        // draw the meteor at the given position
         private void drawpos(float xpos, float ypos)
         {
-
+            // draw the meteor fill in black
             GL.Color3(Color.Black);
             GL.Begin(PrimitiveType.Polygon);
             for (int i = 0; i < size; i++)
@@ -202,6 +212,7 @@ namespace MasterBlaster
             GL.Vertex2(pts[0, 0] + xpos, pts[0, 1] + ypos);
             GL.End();
 
+            // draw the meteor's edge
             GL.LineWidth(1.0f);
             GL.Color3(this.color);
             GL.Begin(PrimitiveType.LineStrip);

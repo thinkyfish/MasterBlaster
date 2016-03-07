@@ -20,6 +20,7 @@ namespace MasterBlaster
         public float x;
         public float y;
         public int health;
+
         public Explosion(float x, float y, float angle)
         {
             this.size = 10;
@@ -30,11 +31,14 @@ namespace MasterBlaster
             this.color = Color.Red;
             this.health = 20;
 
-            // flip the explosion angle around
+            // flip the explosion angle around so it doesnt shoot into the meteor
             this.angle = angle = 180.0f;
+
+            //randomly generate lines radiating backwards from the explosion site
             for (int i = 0; i < size; i++)
             {
                 float a_rand = Engine.rand.Next() % 110 - 55; //range -45,45
+
                 end[i, 0] = len * (float)Math.Cos((angle + a_rand) * Engine.PI / 180.0f);
                 end[i, 1] = len * (float)Math.Sin((angle + a_rand) * Engine.PI / 180.0f);
 
@@ -43,10 +47,13 @@ namespace MasterBlaster
 
         public void draw()
         {
+            // check if there are more frames to draw
             if (health > 0)
             {
-                GL.Color3(Color.Red);
+                GL.Color3(color);
                 GL.LineWidth(1.0f);
+
+                // draw each explosion line
                 for (int i = 0; i < size; i++)
                 {
                     GL.Begin(PrimitiveType.LineStrip);
@@ -56,6 +63,8 @@ namespace MasterBlaster
 
                     GL.End();
                 }
+
+                //decrease remaining frames by one
                 health -= 1;
             }
         }
