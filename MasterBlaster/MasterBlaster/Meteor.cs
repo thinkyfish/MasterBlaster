@@ -17,6 +17,7 @@ namespace MasterBlaster
 
         public float[] pos;
         private float[,] shadowpos;
+        private const int shadows = 8;
 
         public float rad;
 
@@ -48,6 +49,18 @@ namespace MasterBlaster
             shadowpos[3, 0] = position[0] - 2.0f;
             shadowpos[3, 1] = position[1];
 
+            shadowpos[4, 0] = position[0] - 2.0f;
+            shadowpos[4, 1] = position[1] + 2.0f;
+
+            shadowpos[5, 0] = position[0] + 2.0f;
+            shadowpos[5, 1] = position[1] - 2.0f;
+
+            shadowpos[6, 0] = position[0] - 2.0f;
+            shadowpos[6, 1] = position[1] - 2.0f;
+
+            shadowpos[7, 0] = position[0] + 2.0f;
+            shadowpos[7, 1] = position[1] + 2.0f;
+
         }
 
         // use barycentric coordinates to check if P is inside triangle A,B,C.
@@ -77,7 +90,7 @@ namespace MasterBlaster
             if (isWithinPos(x, y, pos[0], pos[1]))
                 return true;
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < shadows; i++)
             {
                 if (isWithinPos(x, y, shadowpos[i, 0], shadowpos[i, 1]))
                     return true;
@@ -189,7 +202,7 @@ namespace MasterBlaster
             drawpos(this.pos[0], this.pos[1]);
 
             //loop over the possible intruding edges, checking if any are visible and if so, draw them.
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < shadows; i++)
             {
                 if (onscreen(shadowpos[i, 0], shadowpos[i, 1]))
                 {
@@ -234,7 +247,7 @@ namespace MasterBlaster
         {
             pts = new float[size, 2];
             pos = new float[2];
-            shadowpos = new float[4, 2];
+            shadowpos = new float[shadows, 2];
 
             this.size = size;
             this.color = Color.White;

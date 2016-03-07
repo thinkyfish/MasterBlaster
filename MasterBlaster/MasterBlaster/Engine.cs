@@ -15,7 +15,9 @@ namespace MasterBlaster
         private List<Bullet> bulletlist;
         private List<Meteor> meteorlist;
         private List<Explosion> explosionlist;
-        private List<Ship> shiplist;
+        private Ship ship;
+        private int bulletcycle;
+        private bool firing;
 
         //This is the rng for the whole game
         public static Random rand = new Random();
@@ -36,12 +38,12 @@ namespace MasterBlaster
         public const float METEOR_RFUDGE = 0.9f;
         public const int METEOR_MINSIZE = 4;
 
-        public const float BULLET_SIZE = 3;
-        public const float BULLET_VEL = 2;
+        public const float BULLET_SIZE = 3.0f;
+        public const float BULLET_VEL = 2.0f;
         public const float BULLET_RANGE = 10f;
         public const int BULLET_DAMAGE = 300;
-        public const float FIRE_RATE = 10;
-        public const float SHIP_TURN = 4;
+        public const int FIRE_CYCLE = 10;
+        public const float SHIP_TURN = 4.0f;
         public const float SHIP_THRUST = 1.4f;
         public const float SHIP_DRAG = 0.008f;
 
@@ -66,6 +68,8 @@ namespace MasterBlaster
         public const string SCOREFILE = "scores.dat";
         public const string SCOREFILEBAK = "scores.dat~";
 
+
+        
 
         public static float dist2(float x1, float y1, float x2, float y2)
         {
@@ -101,14 +105,50 @@ namespace MasterBlaster
 
         public Engine()
         {
-            bulletlist = new List<Bullet>();
-            meteorlist = new List<Meteor>();
-            explosionlist = new List<Explosion>();
-            shiplist = new List<Ship>();
-
+            this.bulletlist = new List<Bullet>();
+            this.meteorlist = new List<Meteor>();
+            this.explosionlist = new List<Explosion>();
+            ship = new Ship();
+            this.bulletcycle = 0;
         }
+        private bool cyclebullet()
+        {
+            bool fire = false;
+            if (bulletcycle == 0)
+                fire = true;
+            // cycle the value 
+            this.bulletcycle += 1;
+            this.bulletcycle %= FIRE_CYCLE;
+            return fire;
+        }
+        public void startfiring()
+        {
+            //reset bullet cycle
+            bulletcycle = 0;
+            firing = true;
+        }
+        public void stopfiring()
+        {
+            bulletcycle = 0;
+            firing = false;
+        }
+        public void fire_bullet() {
+            if (firing && cyclebullet())
+            {
+                float x = ship.pts[0, 0] + ship.pos[0];
+                float y = ship.pts[0, 1] + ship.pos[1];
+
+                float vel = BULLET_VEL;
+                Bullet b = new Bullet(x, y, ship.angle, vel);
+                b.ax = ship.ax + ship.fx;
+                bulletlist.Add(b);
+            }
+        }
+        
         public void nextframe(float dt = Engine.DT)
         {
+            //fire bullets if needed
+            if (firing) fire_bullet();
 
             //remove dead meteors
             meteorlist.RemoveAll(m => m.health <= 0.0f);
@@ -198,7 +238,7 @@ namespace MasterBlaster
             //TODO
 
             //compute ship position
-            shiplist.ForEach(s => s.nextframe(dt));
+            if (ship != null) ship.nextframe(dt);
 
         }
         public void draw()
@@ -206,19 +246,30 @@ namespace MasterBlaster
             bulletlist.ForEach(b => b.draw());
             meteorlist.ForEach(m => m.draw());
             explosionlist.ForEach(e => e.draw());
-            shiplist.ForEach(s => s.draw());
+            if(ship != null) ship.draw();
         }
         public void addBullet(Bullet b)
         {
             bulletlist.Add(b);
         }
-        public void addMeteor()
+        public void newMeteor(int size = METEOR_PTS)
         {
-            meteorlist.Add(new Meteor(16,(float)Engine.rand.NextDouble(), (float)Engine.rand.NextDouble()));
+            float mx = ship.pos[0];
+            float my = ship.pos[1];
+
+            // generate a position -1 to 1 that is at least .25 away from the ship
+            while (dist(ship.pos, mx, my) < 0.25f)
+            {
+                
+                mx = (float)(rand.NextDouble() * 2.0 - 1.0); 
+                my = (float)(rand.NextDouble() * 2.0 - 1.0);
+
+            }
+            meteorlist.Add(new Meteor(size, mx, my));
         }
-        public void addShip()
+        public void addShip(float x = 0.0f, float y = 0.0f)
         {
-            shiplist.Add(new Ship());
+            ship = new Ship(x, y) ;
         }
 
     }

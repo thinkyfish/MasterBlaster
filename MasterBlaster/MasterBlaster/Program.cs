@@ -25,8 +25,8 @@ namespace MasterBlaster
             engine.addBullet(new Bullet(0.5f, 0.5f, 25f));
             engine.addBullet(new Bullet(0.5f, 0.5f, 10f));
             engine.addBullet(new Bullet(0.5f, 0.5f, 300f));
-            engine.addMeteor();
-            engine.addMeteor();
+            engine.newMeteor();
+            engine.newMeteor();
             engine.addShip();
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
             using (var game = new MBGameWindow())
@@ -41,7 +41,32 @@ namespace MasterBlaster
                 {
                     GL.Viewport(0, 0, game.Width, game.Height);
                 };
+                game.KeyDown += (sender, e) =>
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Space:
+                            engine.startfiring();
+                            break;
 
+                        default:
+                            break;
+                    }
+
+                };
+                game.KeyUp += (sender, e) =>
+                {
+                    switch (e.Key)
+                    {
+                        case Key.Space:
+                            engine.stopfiring();
+                            break;
+
+                        default:
+                            break;
+                    }
+
+                };
                 game.UpdateFrame += (sender, e) =>
                 {
                     // add game logic, input handling
@@ -49,9 +74,9 @@ namespace MasterBlaster
                     {
                         game.Exit();
                     }
-                    
+                    engine.nextframe(Engine.DT);
                     //b.nextframe();
-                    
+
                 };
 
                 game.RenderFrame += (sender, e) =>
@@ -72,7 +97,7 @@ namespace MasterBlaster
                     //GL.Vertex2(1.0f, 1.0f);
 
                     GL.End();
-                    engine.nextframe();
+
                     engine.draw();
                     //b.draw();
                     game.SwapBuffers();

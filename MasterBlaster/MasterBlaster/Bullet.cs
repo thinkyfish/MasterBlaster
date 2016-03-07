@@ -15,8 +15,8 @@ namespace MasterBlaster
         public float[] pos;
         public float angle;
         private float vel;
-        private float ax;
-        private float ay;
+        public float ax;
+        public float ay;
         private float dist;
         public int health;
         public int damage;

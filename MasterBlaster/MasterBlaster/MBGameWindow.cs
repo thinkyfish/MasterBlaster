@@ -7,6 +7,7 @@ using OpenTK;
 
 namespace MasterBlaster
 {
+    //private Engine engine;
     class MBGameWindow : GameWindow
     {
 

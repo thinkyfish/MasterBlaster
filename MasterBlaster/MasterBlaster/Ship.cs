@@ -11,18 +11,18 @@ namespace MasterBlaster
 {
     class Ship
     {
-        private float angle;
+        public float angle;
 
-        private float[] pos;
+        public float[] pos;
 
         private float vx;
         private float vy;
 
-        private float ax;
-        private float ay;
+        public float ax;
+        public float ay;
 
-        private float fx;
-        private float fy;
+        public float fx;
+        public float fy;
 
         private float mass;
 
@@ -30,7 +30,7 @@ namespace MasterBlaster
 
         private float thrust;
 
-        private float[,] pts;
+        public float[,] pts;
 
         private Color color;
 
