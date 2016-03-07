@@ -32,15 +32,15 @@ namespace MasterBlaster
             this.health = 20;
 
             // flip the explosion angle around so it doesnt shoot into the meteor
-            this.angle = angle = 180.0f;
+            this.angle = angle - 180.0f;
 
             //randomly generate lines radiating backwards from the explosion site
             for (int i = 0; i < size; i++)
             {
                 float a_rand = Engine.rand.Next() % 110 - 55; //range -45,45
 
-                end[i, 0] = len * (float)Math.Cos((angle + a_rand) * Engine.PI / 180.0f);
-                end[i, 1] = len * (float)Math.Sin((angle + a_rand) * Engine.PI / 180.0f);
+                end[i, 0] = len * (float)Math.Cos((this.angle + a_rand) * Engine.PI / 180.0f);
+                end[i, 1] = len * (float)Math.Sin((this.angle + a_rand) * Engine.PI / 180.0f);
 
             }
         }

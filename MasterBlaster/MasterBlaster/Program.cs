@@ -27,6 +27,7 @@ namespace MasterBlaster
             engine.addBullet(new Bullet(0.5f, 0.5f, 300f));
             engine.addMeteor();
             engine.addMeteor();
+            engine.addShip();
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
             using (var game = new MBGameWindow())
             {

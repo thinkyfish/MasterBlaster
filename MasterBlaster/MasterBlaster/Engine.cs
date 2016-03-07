@@ -15,6 +15,7 @@ namespace MasterBlaster
         private List<Bullet> bulletlist;
         private List<Meteor> meteorlist;
         private List<Explosion> explosionlist;
+        private List<Ship> shiplist;
 
         //This is the rng for the whole game
         public static Random rand = new Random();
@@ -41,7 +42,7 @@ namespace MasterBlaster
         public const int BULLET_DAMAGE = 300;
         public const float FIRE_RATE = 10;
         public const float SHIP_TURN = 4;
-        public const float SHIP_ENGINE = 1.4f;
+        public const float SHIP_THRUST = 1.4f;
         public const float SHIP_DRAG = 0.008f;
 
         public const float MAX_VEL = 3;
@@ -103,6 +104,7 @@ namespace MasterBlaster
             bulletlist = new List<Bullet>();
             meteorlist = new List<Meteor>();
             explosionlist = new List<Explosion>();
+            shiplist = new List<Ship>();
 
         }
         public void nextframe(float dt = Engine.DT)
@@ -195,7 +197,8 @@ namespace MasterBlaster
             //check for meteor collisions
             //TODO
 
-
+            //compute ship position
+            shiplist.ForEach(s => s.nextframe(dt));
 
         }
         public void draw()
@@ -203,6 +206,7 @@ namespace MasterBlaster
             bulletlist.ForEach(b => b.draw());
             meteorlist.ForEach(m => m.draw());
             explosionlist.ForEach(e => e.draw());
+            shiplist.ForEach(s => s.draw());
         }
         public void addBullet(Bullet b)
         {
@@ -211,6 +215,10 @@ namespace MasterBlaster
         public void addMeteor()
         {
             meteorlist.Add(new Meteor(16,(float)Engine.rand.NextDouble(), (float)Engine.rand.NextDouble()));
+        }
+        public void addShip()
+        {
+            shiplist.Add(new Ship());
         }
 
     }
