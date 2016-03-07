@@ -11,10 +11,13 @@ namespace MasterBlaster
 {
     class Engine
     {
+        //entit
         private List<Bullet> bulletlist;
         private List<Meteor> meteorlist;
         private List<Explosion> explosionlist;
 
+        //This is the rng for the whole game
+        public static Random rand = new Random();
 
         public const float DOT_SIZE = 8.0f;
         public const int MAX_NUMDOTS = 100;
@@ -91,7 +94,7 @@ namespace MasterBlaster
                 return -2f;
         }
 
-        public static Random rand = new Random();
+        
 
 
 
