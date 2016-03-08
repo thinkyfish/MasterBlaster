@@ -45,7 +45,7 @@ namespace MasterBlaster
             this.pos = new float[2];
             this.pos[0] = x;
             this.pos[1] = y;
-            this.angle = 0.0f;
+            this.angle = 400.0f;
             this.drag = Engine.SHIP_DRAG;
             this.color = Color.White;
             this.health = 1;

@@ -18,6 +18,8 @@ namespace MasterBlaster
         private Ship ship;
         private int bulletcycle;
         private bool firing;
+        private bool thrusting;
+        private float turning;
 
         //This is the rng for the whole game
         public static Random rand = new Random();
@@ -34,17 +36,17 @@ namespace MasterBlaster
         public const int METEOR_VALUE = 100;
         public const float METEOR_HEALTH = 300.0f;
         public const float METEOR_DRAG = 0.1f;
-        public const int METEOR_BLAST = 500;
+        public const float METEOR_BLAST = 8000.0f;
         public const float METEOR_RFUDGE = 0.9f;
         public const int METEOR_MINSIZE = 4;
 
         public const float BULLET_SIZE = 3.0f;
-        public const float BULLET_VEL = 2.0f;
+        public const float BULLET_VEL = 10.0f;
         public const float BULLET_RANGE = 10f;
         public const int BULLET_DAMAGE = 300;
         public const int FIRE_CYCLE = 100;
         public const float SHIP_TURN = 4.0f;
-        public const float SHIP_THRUST = 1.4f;
+        public const float SHIP_THRUST = 100.4f;
         public const float SHIP_DRAG = 0.008f;
 
         public const float MAX_VEL = 3;
@@ -69,7 +71,7 @@ namespace MasterBlaster
         public const string SCOREFILEBAK = "scores.dat~";
 
 
-        
+
 
         public static float dist2(float x1, float y1, float x2, float y2)
         {
@@ -89,17 +91,30 @@ namespace MasterBlaster
 
         public static float glrange(float a)
         {
-            if (a > 1.01f)
-                a -= 2.02f;
-            else if (a < -1.01f)
-                a += 2.02f;
-            if (a < 1.01f && a > -1.01f)
-                return a;
-            else
-                return -2f;
+            //if (a > 1.015625f)
+            //    a -= 2.03125f;
+            //else if (a < -1.015625f)
+            //    a += 2.03125f;
+            //if (a < 1.015625f && a > -1.015625f)
+            //    return a;
+            //else
+            //    return -2f;
+            if (a > 1.0f)
+                a -= 2.0f;
+            else if (a < -1.0f)
+                a += 2.0f;
+
+            return a;
+
         }
 
-        
+        public static float anglerange(float angle)
+        {
+            float newangle = angle % 360.0f;
+            if (newangle < 0.0f)
+                newangle = 360.0f - newangle;
+            return newangle;
+        }
 
 
 
@@ -124,7 +139,7 @@ namespace MasterBlaster
         public void startfiring()
         {
             //reset bullet cycle
-            if(!firing)
+            if (!firing)
                 bulletcycle = 0;
             firing = true;
         }
@@ -133,7 +148,8 @@ namespace MasterBlaster
             //bulletcycle = 0;
             firing = false;
         }
-        public void fire_bullet() {
+        public void fire_bullet()
+        {
             if (firing && cyclebullet())
             {
                 float x = ship.pts[0, 0] + ship.pos[0];
@@ -145,11 +161,32 @@ namespace MasterBlaster
                 bulletlist.Add(b);
             }
         }
-        
+        public void startThrusting(float direction = 1.0f)
+        {
+            thrusting = true;
+            ship.engine(direction * SHIP_THRUST);
+        }
+        public void stopThrusting()
+        {
+            thrusting = false;
+            ship.engine(0);
+        }
+        public void startTurning(float direction)
+        {
+            turning = direction;
+        }
+        public void stopTurning()
+        {
+            turning = 0.0f;
+        }
         public void nextframe(float dt = Engine.DT)
         {
             //fire bullets if needed
             if (firing) fire_bullet();
+            if(turning != 0.0f)
+            {
+                ship.angle += turning * SHIP_TURN;
+            }
 
             //remove dead meteors
             meteorlist.RemoveAll(m => m.health <= 0.0f);
@@ -182,7 +219,7 @@ namespace MasterBlaster
 
                         //add an explosion effect
                         explosionlist.Add(new Explosion(b.pos[0], b.pos[1], b.angle));
-                        
+
                         //bullet is dead
                         b.health = 0;
 
@@ -215,10 +252,10 @@ namespace MasterBlaster
 
 
 
-                            
+
                         }
 
-                        
+
                     }
                 }
                 //add the kids to the list of meteors *outside* of the foreach
@@ -247,7 +284,7 @@ namespace MasterBlaster
             bulletlist.ForEach(b => b.draw());
             meteorlist.ForEach(m => m.draw());
             explosionlist.ForEach(e => e.draw());
-            if(ship != null) ship.draw();
+            if (ship != null) ship.draw();
         }
         public void addBullet(Bullet b)
         {
@@ -261,8 +298,8 @@ namespace MasterBlaster
             // generate a position -1 to 1 that is at least .25 away from the ship
             while (dist(ship.pos, mx, my) < 0.25f)
             {
-                
-                mx = (float)(rand.NextDouble() * 2.0 - 1.0); 
+
+                mx = (float)(rand.NextDouble() * 2.0 - 1.0);
                 my = (float)(rand.NextDouble() * 2.0 - 1.0);
 
             }
@@ -270,7 +307,7 @@ namespace MasterBlaster
         }
         public void addShip(float x = 0.0f, float y = 0.0f)
         {
-            ship = new Ship(x, y) ;
+            ship = new Ship(x, y);
         }
 
     }

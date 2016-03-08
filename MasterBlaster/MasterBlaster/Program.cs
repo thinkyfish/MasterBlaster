@@ -19,12 +19,10 @@ namespace MasterBlaster
         public static void Main()
         {
             Engine engine = new Engine();
-            engine.addBullet(new Bullet(0.5f, 0.5f, 35f));
-            engine.addBullet(new Bullet(0.5f, 0.5f, 40f));
-            engine.addBullet(new Bullet(0.5f, 0.5f, 56f));
-            engine.addBullet(new Bullet(0.5f, 0.5f, 25f));
-            engine.addBullet(new Bullet(0.5f, 0.5f, 10f));
-            engine.addBullet(new Bullet(0.5f, 0.5f, 300f));
+            engine.newMeteor();
+            engine.newMeteor();
+            engine.newMeteor();
+            engine.newMeteor();
             engine.newMeteor();
             engine.newMeteor();
             engine.addShip();
@@ -48,7 +46,18 @@ namespace MasterBlaster
                         case Key.Space:
                             engine.startfiring();
                             break;
-
+                        case Key.W:
+                            engine.startThrusting(1.0f);
+                            break;
+                        case Key.S:
+                            engine.startThrusting(-1.0f);
+                            break;
+                        case Key.A:
+                            engine.startTurning(1.0f);
+                            break;
+                        case Key.D:
+                            engine.startTurning(-1.0f);
+                            break;
                         default:
                             break;
                     }
@@ -61,7 +70,15 @@ namespace MasterBlaster
                         case Key.Space:
                             engine.stopfiring();
                             break;
-
+                        case Key.W:
+                            engine.stopThrusting();
+                            break;
+                        case Key.A:
+                            engine.stopTurning();
+                            break;
+                        case Key.D:
+                            engine.stopTurning();
+                            break;
                         default:
                             break;
                     }

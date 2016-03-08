@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System.Diagnostics;
 
 namespace MasterBlaster
 {
@@ -18,6 +19,7 @@ namespace MasterBlaster
         public float[] pos;
         private float[,] shadowpos;
         private const int shadows = 8;
+        private bool[] shadowdraw;
 
         public float rad;
 
@@ -61,8 +63,37 @@ namespace MasterBlaster
             shadowpos[7, 0] = position[0] + 2.0f;
             shadowpos[7, 1] = position[1] + 2.0f;
 
+
+
         }
 
+        // decides which of the shadows are possible with the given angle.
+        public void setshadowdraw(float angle)
+        {
+            angle = Engine.anglerange(angle);
+            // y + 2
+            shadowdraw[0] = 180.0f < angle && angle < 360.0f;
+            // x + 2
+            shadowdraw[1] = 90.0f < angle && angle < 270.0f;
+            // y - 2
+            shadowdraw[2] = 0.0f < angle && angle < 180.0f;
+            // x - 2
+            shadowdraw[3] = 270.0f < angle || angle < 90.0f;
+            // x - 2, y + 2
+            shadowdraw[4] = 270.0f < angle && angle < 360.0f;
+            // x + 2, y - 2
+            shadowdraw[5] = 90.0f < angle && angle < 180.0f;
+            // x - 2, y - 2
+            shadowdraw[6] = 0.0f < angle && angle < 90.0f;
+            // x + 2, y + 2
+            shadowdraw[7] = 180.0f < angle && angle < 270.0f;
+            Debug.WriteLine("call {0}", angle);
+            foreach (bool s in shadowdraw)
+            {
+
+                Debug.WriteLine(s.ToString());
+            }
+        }
         // use barycentric coordinates to check if P is inside triangle A,B,C.
         // from "http://www.blackpawn.com/texts/pointinpoly"
         public bool intriangle(Vector2 A, Vector2 B, Vector2 C, Vector2 P)
@@ -87,14 +118,19 @@ namespace MasterBlaster
         // check if a point is inside the meteor or it's shadows
         public bool isWithin(float x, float y)
         {
+            
+
+            // check the triangular wedges of the meteor
             if (isWithinPos(x, y, pos[0], pos[1]))
                 return true;
 
+            // do the same checks for all the shadows
             for (int i = 0; i < shadows; i++)
             {
                 if (isWithinPos(x, y, shadowpos[i, 0], shadowpos[i, 1]))
                     return true;
             }
+
             return false;
         }
 
@@ -102,7 +138,7 @@ namespace MasterBlaster
         private bool isWithinPos(float x, float y, float posx, float posy)
         {
             //check if inside the possible radius of the meteor
-            if (Engine.dist2(posx, posy, x, y) < (rad + 0.5f * rad))
+            if (Engine.dist2(posx, posy, x, y) < (1.5f * rad))
             {
                 Vector2 A = new Vector2(posx, posy);
                 Vector2 P = new Vector2(x, y);
@@ -111,21 +147,30 @@ namespace MasterBlaster
                 //check the wedges with edge points in the middle of the pts list
                 for (int i = 1; i < size; i++)
                 {
-                    B = new Vector2(pts[i, 0]+posx, pts[i, 1]+posy);
-                    C = new Vector2(pts[i - 1, 0]+posx, pts[i - 1, 1]+posy);
+                    B = new Vector2(pts[i, 0] + posx, pts[i, 1] + posy);
+                    C = new Vector2(pts[i - 1, 0] + posx, pts[i - 1, 1] + posy);
                     if (intriangle(A, B, C, P))
                         return true;
                 }
 
                 //check the wedge with edge points as the first and last elements of the pts list
-                B = new Vector2(pts[size - 1, 0]+posx, pts[size - 1, 1]+posy);
-                C = new Vector2(pts[0, 0]+posx, pts[0, 1]+posy);
+                B = new Vector2(pts[size - 1, 0] + posx, pts[size - 1, 1] + posy);
+                C = new Vector2(pts[0, 0] + posx, pts[0, 1] + posy);
                 if (intriangle(A, B, C, P))
                     return true;
             }
 
             // no collision found
             return false;
+        }
+        public float shadowWarp(float position)
+        {
+            float maxrad = this.rad * 1.5f;
+            if (position > (1.0f + maxrad))
+                position -= 2.0f;
+            if (position < (-1.0f) - maxrad)
+                position += 2.0f;
+            return position;
         }
 
         // check if any of the meteor's lines are visible
@@ -147,8 +192,9 @@ namespace MasterBlaster
         //this is used to put an impulse on the meteor
         public void blast(float angle, float blastamt = Engine.METEOR_BLAST)
         {
-            this.angle = angle;
+            this.angle = Engine.anglerange(angle);
             this.blastamt = blastamt;
+            this.setshadowdraw(angle);
         }
 
         //compute the next position of the meteor
@@ -188,8 +234,10 @@ namespace MasterBlaster
             dpy = vy * dt;
 
             //compute the new positions and correct if off the edge of the screen.
-            pos[0] = Engine.glrange(pos[0] + dpx);
-            pos[1] = Engine.glrange(pos[1] + dpy);
+            //pos[0] = Engine.glrange(pos[0] + dpx);
+            //pos[1] = Engine.glrange(pos[1] + dpy);
+            pos[0] = shadowWarp(pos[0] + dpx);
+            pos[1] = shadowWarp(pos[1] + dpy);
 
             //reset the off screen shadow origins
             setshadow(pos);
@@ -198,13 +246,13 @@ namespace MasterBlaster
         //draw the meteor and any visible shadow copies
         public void draw()
         {
-            //always draw the origin position, it is always on the screen.
+            //always draw the origin position
             drawpos(this.pos[0], this.pos[1]);
 
             //loop over the possible intruding edges, checking if any are visible and if so, draw them.
             for (int i = 0; i < shadows; i++)
             {
-                if (onscreen(shadowpos[i, 0], shadowpos[i, 1]))
+                if (true)//onscreen(shadowpos[i, 0], shadowpos[i, 1]))
                 {
                     drawpos(shadowpos[i, 0], shadowpos[i, 1]);
                 }
@@ -245,10 +293,10 @@ namespace MasterBlaster
 
         public Meteor(int size = Engine.METEOR_PTS, float x = 0.0f, float y = 0.0f, float b_angle = 0f)
         {
-            pts = new float[size, 2];
-            pos = new float[2];
-            shadowpos = new float[shadows, 2];
-
+            this.pts = new float[size, 2];
+            this.pos = new float[2];
+            this.shadowpos = new float[shadows, 2];
+            this.shadowdraw = new bool[shadows];
             this.size = size;
             this.color = Color.White;
             this.value = Engine.METEOR_VALUE;
@@ -271,7 +319,8 @@ namespace MasterBlaster
             float angle = 0;
             for (int i = 1; i <= size; i++)
             {
-                angle = i * (360 / size);
+                angle = Engine.anglerange(i * (360 / size));
+
 
                 float p_rand = ((float)Engine.rand.NextDouble() * 0.5f + 0.5f) * rad;
 
@@ -281,6 +330,9 @@ namespace MasterBlaster
                 pts[i - 1, 0] = p_x;
                 pts[i - 1, 1] = p_y;
             }
+
+
+
 
             //give the meteor a random starting blast angle
             if (b_angle == 0)
