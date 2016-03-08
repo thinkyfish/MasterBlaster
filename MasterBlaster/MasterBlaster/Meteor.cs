@@ -22,7 +22,7 @@ namespace MasterBlaster
         private bool[] shadowdraw;
 
         public float rad;
-
+        private float maxrad;
         private Color color;
 
         private int value;
@@ -118,19 +118,23 @@ namespace MasterBlaster
         // check if a point is inside the meteor or it's shadows
         public bool isWithin(float x, float y)
         {
-            
+
 
             // check the triangular wedges of the meteor
             if (isWithinPos(x, y, pos[0], pos[1]))
                 return true;
 
             // do the same checks for all the shadows
-            for (int i = 0; i < shadows; i++)
+            if (pos[0] > 1.0 - maxrad || pos[0] < -1.0 + maxrad ||
+                pos[1] > 1.0 - maxrad || pos[1] < -1.0 + maxrad)
+                
             {
-                if (isWithinPos(x, y, shadowpos[i, 0], shadowpos[i, 1]))
-                    return true;
+                for (int i = 0; i < shadows; i++)
+                {
+                    if (isWithinPos(x, y, shadowpos[i, 0], shadowpos[i, 1]))
+                        return true;
+                }
             }
-
             return false;
         }
 
@@ -138,7 +142,7 @@ namespace MasterBlaster
         private bool isWithinPos(float x, float y, float posx, float posy)
         {
             //check if inside the possible radius of the meteor
-            if (Engine.dist2(posx, posy, x, y) < (1.5f * rad))
+            if (Engine.dist2(posx, posy, x, y) < maxrad)
             {
                 Vector2 A = new Vector2(posx, posy);
                 Vector2 P = new Vector2(x, y);
@@ -165,7 +169,6 @@ namespace MasterBlaster
         }
         public float shadowWarp(float position)
         {
-            float maxrad = this.rad * 1.5f;
             if (position > (1.0f + maxrad))
                 position -= 2.0f;
             if (position < (-1.0f) - maxrad)
@@ -182,7 +185,7 @@ namespace MasterBlaster
 
             for (i = 0; i < this.size; i++)
             {
-                if ((xcoord < 1.01f) || (ycoord < 1.01f))
+                if ((xcoord < 1.0f) || (ycoord < 1.0f))
                     return true;
             }
 
@@ -194,7 +197,7 @@ namespace MasterBlaster
         {
             this.angle = Engine.anglerange(angle);
             this.blastamt = blastamt;
-            this.setshadowdraw(angle);
+            //this.setshadowdraw(angle);
         }
 
         //compute the next position of the meteor
@@ -250,11 +253,15 @@ namespace MasterBlaster
             drawpos(this.pos[0], this.pos[1]);
 
             //loop over the possible intruding edges, checking if any are visible and if so, draw them.
-            for (int i = 0; i < shadows; i++)
+            if (pos[0] > 1.0f - maxrad || pos[0] < -1.0f + maxrad ||
+                pos[1] > 1.0f - maxrad || pos[1] < -1.0f + maxrad)
             {
-                if (true)//onscreen(shadowpos[i, 0], shadowpos[i, 1]))
+                for (int i = 0; i < shadows; i++)
                 {
+                    //if (onscreen(shadowpos[i, 0], shadowpos[i, 1])) // don't need this. its faster to just draw them all.
+                    //{
                     drawpos(shadowpos[i, 0], shadowpos[i, 1]);
+                    //}
                 }
             }
         }
@@ -313,6 +320,7 @@ namespace MasterBlaster
 
             //health and radius of the meteor are proportional to size
             rad = 0.2f * ((float)size / Engine.METEOR_PTS);
+            maxrad = this.rad * 1.5f;
             health = Engine.METEOR_HEALTH * ((float)size / (float)Engine.METEOR_PTS);
 
             //generate the randomized surface of the meteor
