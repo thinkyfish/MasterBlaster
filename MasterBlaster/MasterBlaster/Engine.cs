@@ -20,7 +20,8 @@ namespace MasterBlaster
         private bool firing;
         private bool thrusting;
         private float turning;
-
+        public int level = 1;
+        private bool game_over;
         //This is the rng for the whole game
         public static Random rand = new Random();
 
@@ -70,7 +71,15 @@ namespace MasterBlaster
         public const string SCOREFILE = "scores.dat";
         public const string SCOREFILEBAK = "scores.dat~";
 
-
+        public void nextlevel(int l)
+        {
+            ship = new Ship();
+            int i;
+            for(i = 0; i < l; i++)
+            {
+                newMeteor((l + 8) / 2);
+            }
+        }
 
 
         public static bool dist2(float x1, float y1, float x2, float y2, float test )
@@ -265,7 +274,7 @@ namespace MasterBlaster
                     if ((m.health > 0.0f) && (ship.health > 0.0f) && 
                         m.isWithin(ship.pos[0] + ship.pts[i, 0], ship.pos[1] + ship.pts[i, 1]))
                     {
-                        //ship.health = 0;
+                        ship.health = 0;
                     }
                 }
 
@@ -282,6 +291,14 @@ namespace MasterBlaster
             meteorlist.RemoveAll(m => m.health <= 0.0f);
             //check for meteor collisions
             //TODO
+
+            //go up to the next level if there are no meteors left
+            if(meteorlist.Count == 0)
+            {
+                // delete any active bullets
+                bulletlist = new List<Bullet>();
+                nextlevel(++level);
+            }
 
             //compute ship position
             if (ship != null) ship.nextframe(dt);
