@@ -36,7 +36,7 @@ namespace MasterBlaster
         public const int METEOR_VALUE = 100;
         public const float METEOR_HEALTH = 300.0f;
         public const float METEOR_DRAG = 0.1f;
-        public const float METEOR_BLAST = 8000.0f;
+        public const float METEOR_BLAST = 80000.0f;
         public const float METEOR_RFUDGE = 0.9f;
         public const int METEOR_MINSIZE = 4;
 
@@ -44,7 +44,7 @@ namespace MasterBlaster
         public const float BULLET_VEL = 10.0f;
         public const float BULLET_RANGE = 0.016f;  //this is range squared
         public const int BULLET_DAMAGE = 300;
-        public const int FIRE_CYCLE = 15;
+        public const int FIRE_CYCLE = 11;
         public const float SHIP_TURN = 4.0f;
         public const float SHIP_THRUST = 100.4f;
         public const float SHIP_DRAG = 0.008f;
@@ -206,9 +206,9 @@ namespace MasterBlaster
             List<Meteor> kidlist = new List<Meteor>();
 
             //check for bullet collisions with meteors
-            foreach (Bullet b in bulletlist)
+            foreach (Meteor m in meteorlist) 
             {
-                foreach (Meteor m in meteorlist)
+                foreach (Bullet b in bulletlist)
                 {
                     //resolve the effects of a collision
                     if ((m.health > 0.0f) && (b.health > 0) && m.isWithin(b.pos[0], b.pos[1]))
@@ -258,15 +258,23 @@ namespace MasterBlaster
 
                     }
                 }
-                //add the kids to the list of meteors *outside* of the foreach
-                if (kidlist.Count > 0)
+
+                //check for ship collisions
+                for(int i = 0; i < ship.pts.GetLength(0); i++)
                 {
-                    meteorlist.AddRange(kidlist);
+                    if ((m.health > 0.0f) && (ship.health > 0.0f) && 
+                        m.isWithin(ship.pos[0] + ship.pts[i, 0], ship.pos[1] + ship.pts[i, 1]))
+                    {
+                        //ship.health = 0;
+                    }
                 }
 
-
             }
-
+            //add the kids to the list of meteors *outside* of the foreach
+            if (kidlist.Count > 0)
+            {
+                meteorlist.AddRange(kidlist);
+            }
             //remove dead bullets
             bulletlist.RemoveAll(b => b.health <= 0);
 

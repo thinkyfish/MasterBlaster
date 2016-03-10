@@ -66,34 +66,7 @@ namespace MasterBlaster
 
 
         }
-
-        // decides which of the shadows are possible with the given angle.
-        public void setshadowdraw(float angle)
-        {
-            angle = Engine.anglerange(angle);
-            // y + 2
-            shadowdraw[0] = 180.0f < angle && angle < 360.0f;
-            // x + 2
-            shadowdraw[1] = 90.0f < angle && angle < 270.0f;
-            // y - 2
-            shadowdraw[2] = 0.0f < angle && angle < 180.0f;
-            // x - 2
-            shadowdraw[3] = 270.0f < angle || angle < 90.0f;
-            // x - 2, y + 2
-            shadowdraw[4] = 270.0f < angle && angle < 360.0f;
-            // x + 2, y - 2
-            shadowdraw[5] = 90.0f < angle && angle < 180.0f;
-            // x - 2, y - 2
-            shadowdraw[6] = 0.0f < angle && angle < 90.0f;
-            // x + 2, y + 2
-            shadowdraw[7] = 180.0f < angle && angle < 270.0f;
-            Debug.WriteLine("call {0}", angle);
-            foreach (bool s in shadowdraw)
-            {
-
-                Debug.WriteLine(s.ToString());
-            }
-        }
+  
         // use barycentric coordinates to check if P is inside triangle A,B,C.
         // from "http://www.blackpawn.com/texts/pointinpoly"
         public bool intriangle(Vector2 A, Vector2 B, Vector2 C, Vector2 P)

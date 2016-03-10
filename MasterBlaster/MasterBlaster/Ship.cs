@@ -48,41 +48,28 @@ namespace MasterBlaster
             this.angle = 400.0f;
             this.drag = Engine.SHIP_DRAG;
             this.color = Color.White;
-            this.health = 1;
+            this.health = 1.0f;
         }
 
         public void draw()
         {
-            //define the size and shape of the ship
-            float rad = 0.06f;
-            float angle1 = angle;
-            float angle2 = angle + 130;
-            float angle3 = angle - 130;
+            if (health > 0.0f)
+            {
+                GL.LineWidth(1.0f);
+                GL.Color3(this.color);
 
-            // Recompute the ships lines based on the angle
-            pts[0, 0] = rad * (float)Math.Cos(angle1 * Engine.PI / 180.0f);
-            pts[0, 1] = rad * (float)Math.Sin(angle1 * Engine.PI / 180.0f);
-            pts[1, 0] = rad * (float)Math.Cos(angle2 * Engine.PI / 180.0f);
-            pts[1, 1] = rad * (float)Math.Sin(angle2 * Engine.PI / 180.0f);
-            pts[2, 0] = 0.0f;
-            pts[2, 1] = 0.0f;
-            pts[3, 0] = rad * (float)Math.Cos(angle3 * Engine.PI / 180.0f);
-            pts[3, 1] = rad * (float)Math.Sin(angle3 * Engine.PI / 180.0f);
+                //draw the edge lines
+                GL.Begin(PrimitiveType.LineStrip);
+                for (int i = 0; i < 4; i++)
+                    GL.Vertex2(pos[0] + pts[i, 0],
+                       pos[1] + pts[i, 1]);
 
-            GL.LineWidth(1.0f);
-            GL.Color3(this.color);
+                //connect last to first
+                GL.Vertex2(pos[0] + pts[0, 0],
+                       pos[1] + pts[0, 1]);
 
-            //draw the edge lines
-            GL.Begin(PrimitiveType.LineStrip);
-            for (int i = 0; i < 4; i++)
-                GL.Vertex2(pos[0] + pts[i, 0],
-                   pos[1] + pts[i, 1]);
-
-            //connect last to first
-            GL.Vertex2(pos[0] + pts[0, 0],
-                   pos[1] + pts[0, 1]);
-
-            GL.End();
+                GL.End();
+            }
         }
 
         public void engine(float thrust = Engine.SHIP_THRUST)
@@ -120,6 +107,22 @@ namespace MasterBlaster
             // warp at edge of screen
             pos[0] = Engine.glrange(pos[0] + dsx);
             pos[1] = Engine.glrange(pos[1] + dsy);
+
+            //define the size and shape of the ship
+            float rad = 0.06f;
+            float angle1 = angle;
+            float angle2 = angle + 130;
+            float angle3 = angle - 130;
+
+            // Recompute the ships lines based on the angle
+            pts[0, 0] = rad * (float)Math.Cos(angle1 * Engine.PI / 180.0f);
+            pts[0, 1] = rad * (float)Math.Sin(angle1 * Engine.PI / 180.0f);
+            pts[1, 0] = rad * (float)Math.Cos(angle2 * Engine.PI / 180.0f);
+            pts[1, 1] = rad * (float)Math.Sin(angle2 * Engine.PI / 180.0f);
+            pts[2, 0] = 0.0f;
+            pts[2, 1] = 0.0f;
+            pts[3, 0] = rad * (float)Math.Cos(angle3 * Engine.PI / 180.0f);
+            pts[3, 1] = rad * (float)Math.Sin(angle3 * Engine.PI / 180.0f);
 
 
         }
