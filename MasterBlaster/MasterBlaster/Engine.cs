@@ -16,7 +16,7 @@ namespace MasterBlaster
         private List<Meteor> meteorlist;
         private List<Explosion> explosionlist;
         private Ship ship;
-        private int bulletcycle;
+        private int bulletcycle = 0;
         private bool firing;
         private bool thrusting;
         private float turning;
@@ -42,9 +42,9 @@ namespace MasterBlaster
 
         public const float BULLET_SIZE = 3.0f;
         public const float BULLET_VEL = 10.0f;
-        public const float BULLET_RANGE = 10f;
+        public const float BULLET_RANGE = 0.016f;  //this is range squared
         public const int BULLET_DAMAGE = 300;
-        public const int FIRE_CYCLE = 100;
+        public const int FIRE_CYCLE = 15;
         public const float SHIP_TURN = 4.0f;
         public const float SHIP_THRUST = 100.4f;
         public const float SHIP_DRAG = 0.008f;
@@ -73,19 +73,19 @@ namespace MasterBlaster
 
 
 
-        public static float dist2(float x1, float y1, float x2, float y2)
+        public static bool dist2(float x1, float y1, float x2, float y2, float test )
         {
-            double distx = x2 - x1;
-            double disty = y2 - y1;
-            return (float)Math.Sqrt(distx * distx + disty * disty);
+            float distx = x2 - x1;
+            float disty = y2 - y1;
+            return (test * test) > (distx * distx + disty * disty);
         }
 
 
-        public static float dist(float[] dot, float x, float y)
+        public static float distsq(float[] dot, float x, float y)
         {
-            double distx = dot[0] - x;
-            double disty = dot[1] - y;
-            return (float)Math.Sqrt(distx * distx + disty * disty);
+            float distx = dot[0] - x;
+            float disty = dot[1] - y;
+            return distx * distx + disty * disty;
         }
 
 
@@ -139,8 +139,8 @@ namespace MasterBlaster
         public void startfiring()
         {
             //reset bullet cycle
-            if (!firing)
-                bulletcycle = 0;
+            ////if (!firing)
+            //    bulletcycle = 0;
             firing = true;
         }
         public void stopfiring()
@@ -296,7 +296,7 @@ namespace MasterBlaster
             float my = ship.pos[1];
 
             // generate a position -1 to 1 that is at least .25 away from the ship
-            while (dist(ship.pos, mx, my) < 0.25f)
+            while (dist2(ship.pos[0],ship.pos[1], mx, my, 0.25f))
             {
 
                 mx = (float)(rand.NextDouble() * 2.0 - 1.0);

@@ -142,7 +142,7 @@ namespace MasterBlaster
         private bool isWithinPos(float x, float y, float posx, float posy)
         {
             //check if inside the possible radius of the meteor
-            if (Engine.dist2(posx, posy, x, y) < maxrad)
+            if (Engine.dist2(posx, posy, x, y, maxrad))
             {
                 Vector2 A = new Vector2(posx, posy);
                 Vector2 P = new Vector2(x, y);

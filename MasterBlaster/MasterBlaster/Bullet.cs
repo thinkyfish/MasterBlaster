@@ -63,7 +63,7 @@ namespace MasterBlaster
             dsy = vy * dt;
 
             //compute the distance travelled
-            dr = Engine.dist(pos, pos[0] + dsx, pos[1] + dsy);
+            dr = Engine.distsq(pos, pos[0] + dsx, pos[1] + dsy);
 
             // set position and account for screen edges
             pos[0] = Engine.glrange(pos[0] + dsx);
