@@ -20,8 +20,9 @@ namespace MasterBlaster
         private bool firing;
         private bool thrusting;
         private float turning;
-        public int level = 1;
-        private bool game_over;
+        public int level = 8;
+        private bool gameover;
+        public int startinglevel = 8;
         //This is the rng for the whole game
         public static Random rand = new Random();
 
@@ -46,7 +47,7 @@ namespace MasterBlaster
         public const float BULLET_RANGE = 0.016f;  //this is range squared
         public const int BULLET_DAMAGE = 300;
         public const int FIRE_CYCLE = 11;
-        public const float SHIP_TURN = 4.0f;
+        public const float SHIP_TURN = 3.0f;
         public const float SHIP_THRUST = 100.4f;
         public const float SHIP_DRAG = 0.008f;
 
@@ -74,13 +75,14 @@ namespace MasterBlaster
         public void nextlevel(int l)
         {
             ship = new Ship();
+            meteorlist = new List<Meteor>();
+            bulletlist = new List<Bullet>();
             int i;
             for(i = 0; i < l; i++)
             {
                 newMeteor((l + 8) / 2);
             }
         }
-
 
         public static bool dist2(float x1, float y1, float x2, float y2, float test )
         {
@@ -127,13 +129,13 @@ namespace MasterBlaster
 
 
 
-        public Engine()
+        public Engine(int level = 8)
         {
-            this.bulletlist = new List<Bullet>();
-            this.meteorlist = new List<Meteor>();
+            
             this.explosionlist = new List<Explosion>();
-            ship = new Ship();
             this.bulletcycle = 0;
+            this.startinglevel = level;
+            this.nextlevel(level);
         }
         private bool cyclebullet()
         {
@@ -251,7 +253,7 @@ namespace MasterBlaster
                                     kx += m.pos[0];
                                     ky += m.pos[1];
 
-                                    int newsize = (m.size / numkids);
+                                    int newsize = (m.size / numkids) ;
                                     if (newsize < 4) { newsize = 4; }
 
                                     kidlist.Add(new Meteor(newsize, kx, ky, angle + r_ang));
@@ -274,7 +276,7 @@ namespace MasterBlaster
                     if ((m.health > 0.0f) && (ship.health > 0.0f) && 
                         m.isWithin(ship.pos[0] + ship.pts[i, 0], ship.pos[1] + ship.pts[i, 1]))
                     {
-                        ship.health = 0;
+                        ship.health = 0;                       
                     }
                 }
 
@@ -296,10 +298,12 @@ namespace MasterBlaster
             if(meteorlist.Count == 0)
             {
                 // delete any active bullets
-                bulletlist = new List<Bullet>();
                 nextlevel(++level);
             }
 
+            //if ship is dead, start at first level
+            if (ship.health == 0.0f)
+                nextlevel(startinglevel);
             //compute ship position
             if (ship != null) ship.nextframe(dt);
 

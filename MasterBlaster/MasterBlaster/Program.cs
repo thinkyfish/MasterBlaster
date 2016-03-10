@@ -18,9 +18,9 @@ namespace MasterBlaster
         [STAThread]
         public static void Main()
         {
-            Engine engine = new Engine();
-            engine.addShip();
-            engine.level = 8;
+            Engine engine = new Engine(25);
+            
+
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
             using (var game = new MBGameWindow())
             {

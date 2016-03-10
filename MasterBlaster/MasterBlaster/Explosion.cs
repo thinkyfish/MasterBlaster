@@ -23,13 +23,13 @@ namespace MasterBlaster
 
         public Explosion(float x, float y, float angle)
         {
-            this.size = 10;
+            this.size = 5;
             this.end = new float[size, 2];
             this.len = 0.1f;
             this.x = x;
             this.y = y;
             this.color = Color.Red;
-            this.health = 20;
+            this.health = 11;
 
             // flip the explosion angle around so it doesnt shoot into the meteor
             this.angle = angle - 180.0f;
