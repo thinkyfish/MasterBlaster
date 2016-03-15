@@ -85,7 +85,7 @@ namespace MasterBlaster
             float u = (dot11 * dot02 - dot01 * dot12) * invDenom;
             float v = (dot00 * dot12 - dot01 * dot02) * invDenom;
 
-            return (u >= 0) && (v >= 0) && (u + v < 1);
+            return (u >= 0.0f) && (v >= 0.0f) && (u + v < 1.0f);
         }
 
         // check if a point is inside the meteor or it's shadows
@@ -292,8 +292,8 @@ namespace MasterBlaster
             mass = size;
 
             //health and radius of the meteor are proportional to size
-            rad = 0.2f * ((float)size / Engine.METEOR_PTS);
-            maxrad = this.rad * 1.5f;
+			rad = 0.2f * ((float)size / (float)Engine.METEOR_PTS);
+			maxrad = this.rad;// * 1.0f;
             health = Engine.METEOR_HEALTH * ((float)size / (float)Engine.METEOR_PTS);
 
             //generate the randomized surface of the meteor
