@@ -29,6 +29,7 @@ namespace MasterBlaster
                     // setup settings, load textures, sounds
                     game.VSync = VSyncMode.On;
                     //game.WindowBorder = WindowBorder.Hidden;
+					game.fontSetup();
                 };
 
                 game.Resize += (sender, e) =>
