@@ -23,6 +23,7 @@ namespace MasterBlaster
         public int level = 8;
         private bool gameover;
         public int startinglevel = 8;
+		public int score;
         //This is the rng for the whole game
         public static Random rand = new Random();
 
@@ -239,6 +240,7 @@ namespace MasterBlaster
                         {
                             int numkids = (Engine.rand.Next() % 2) + 2;
                             float angle = b.angle;
+							score += m.value;
 
                             // large meteors get kids, small ones don't
                             if (m.size > 6)

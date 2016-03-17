@@ -25,7 +25,7 @@ namespace MasterBlaster
         private float maxrad;
         private Color color;
 
-        private int value;
+        public int value;
 
         private float vx;
         private float vy;
@@ -290,7 +290,7 @@ namespace MasterBlaster
             this.setshadow(pos);
 
             mass = size;
-
+			value = Engine.METEOR_VALUE;
             //health and radius of the meteor are proportional to size
 			rad = 0.2f * ((float)size / (float)Engine.METEOR_PTS);
 			maxrad = this.rad;// * 1.0f;
