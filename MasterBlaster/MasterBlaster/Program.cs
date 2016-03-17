@@ -129,7 +129,7 @@ namespace MasterBlaster
 					QFont.Begin();
 					string text = Convert.ToString(engine.score);
 					SizeF len = game.scoreFont.Measure(text);
-					game.printScore(text, new Vector2(len.Width + 50f, 20.0f));
+					game.printScore(text, new Vector2(game.Width - (len.Width + 50f), 20.0f));
 					GL.Disable(EnableCap.Texture2D);
                     //b.draw();
 					QFont.End();

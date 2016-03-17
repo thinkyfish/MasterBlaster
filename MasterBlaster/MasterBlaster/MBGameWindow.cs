@@ -32,7 +32,7 @@ namespace MasterBlaster
 			//GL.Disable(EnableCap.DepthTest);
 		}
 		public void printScore(string text, Vector2 location){
-			scoreFont.Print (text, QFontAlignment.Right, location);
+			scoreFont.Print (text, QFontAlignment.Left, location);
 		}
 		public void printMenu(string text, Vector2 location){
 			menuFont.Print (text, QFontAlignment.Centre, location);
