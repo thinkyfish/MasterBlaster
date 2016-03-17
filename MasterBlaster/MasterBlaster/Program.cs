@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using QuickFont;
 
 namespace MasterBlaster
 {
@@ -102,12 +103,14 @@ namespace MasterBlaster
                 game.RenderFrame += (sender, e) =>
                 {
                     // render graphics
-                    GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+					GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadIdentity();
                     GL.Viewport(0, 0, game.Width, game.Height);
                     GL.Ortho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+					GL.Disable( EnableCap.Blend );
+					//GL.BlendFunc(
 
                     //GL.Begin(PrimitiveType.Triangles);
                     //GL.Color3(Color.MidnightBlue);
@@ -117,10 +120,18 @@ namespace MasterBlaster
                     //GL.Color3(Color.Ivory);
                     //GL.Vertex2(1.0f, 1.0f);
 
-                    GL.End();
+                    //GL.End();
 
-                    engine.draw();
+					engine.draw();
+					//GL.Clear(ClearBufferMask.DepthBufferBit);
+					GL.Enable(EnableCap.Blend);
+					QFont.Begin();
+					game.printMenu("01235THiS", new Vector2(20.0f, 20.0f));
                     //b.draw();
+					QFont.End();
+
+					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+
                     game.SwapBuffers();
                 };
                 game.Width = 600;
