@@ -14,6 +14,7 @@ namespace MasterBlaster
     //private Engine engine;
     class MBGameWindow : GameWindow
     {
+<<<<<<< HEAD
 		public QFont scoreFont;
 		public QFont menuFont;
 		public void fontSetup(){
@@ -33,6 +34,20 @@ namespace MasterBlaster
 		}
 		public void printScore(string text, Vector2 location){
 			scoreFont.Print (text, QFontAlignment.Left, location);
+=======
+		QFont menuFont;
+		QFont scoreFont;
+		public void fontSetup(){
+			var builderConfig = new QFontBuilderConfiguration (true);
+			menuFont = new QFont("Fonts/Simplex.ttf", 14, builderConfig);
+			scoreFont = new QFont("Fonts/Simplex.ttf", 12, builderConfig);
+			menuFont.Options.Colour = new Color4(1.0f, 1.0f, 1.0f, 1.0f);
+			//GL.ClearColor(1.0f, 0.0f, 0.0f, 0.0f);
+			//GL.Disable(EnableCap.DepthTest);
+		}
+		public void printScore(string text, Vector2 location){
+			scoreFont.Print (text, QFontAlignment.Right, location);
+>>>>>>> ad9b03ce4709a62fb18f13bb51a3fdf888f140cd
 		}
 		public void printMenu(string text, Vector2 location){
 			menuFont.Print (text, QFontAlignment.Centre, location);
