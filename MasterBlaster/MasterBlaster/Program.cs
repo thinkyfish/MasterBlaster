@@ -124,9 +124,13 @@ namespace MasterBlaster
 
 					engine.draw();
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
+					GL.ClearDepth(1.0f);
 					GL.Enable(EnableCap.Blend);
 					QFont.Begin();
-					game.printMenu("01235THiS", new Vector2(20.0f, 20.0f));
+					string text = "01234THiS";
+					SizeF len = game.scoreFont.Measure(text);
+					game.printScore("01235THiS", new Vector2(len.Width + 50f, 20.0f));
+					GL.Disable(EnableCap.Texture2D);
                     //b.draw();
 					QFont.End();
 
