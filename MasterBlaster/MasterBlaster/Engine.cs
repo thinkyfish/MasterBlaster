@@ -46,7 +46,7 @@ namespace MasterBlaster
         public const float BULLET_SIZE = 3.0f;
         public const float BULLET_VEL = 10.0f;
         public const float BULLET_RANGE = 0.016f;  //this is range squared
-        public const int BULLET_DAMAGE = 300;
+        public const int BULLET_DAMAGE = 100;
         public const int FIRE_CYCLE = 11;
         public const float SHIP_TURN = 3.0f;
         public const float SHIP_THRUST = 100.4f;

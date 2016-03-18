@@ -21,26 +21,28 @@ namespace MasterBlaster
         public float y;
         public int health;
 
-        public Explosion(float x, float y, float angle)
+		public Explosion(float x, float y, float bulletangle)
         {
             this.size = 5;
             this.end = new float[size, 2];
             this.len = 0.1f;
             this.x = x;
             this.y = y;
-            this.color = Color.Red;
-            this.health = 11;
+			this.color = Color.White;
+            this.health = 8;
 
             // flip the explosion angle around so it doesnt shoot into the meteor
-            this.angle = angle - 180.0f;
+            this.angle = bulletangle - 180.0f;
+			// add some random angle
+			this.angle += ((float)Engine.rand.NextDouble () - 0.5f) * 45.0f;
 
             //randomly generate lines radiating backwards from the explosion site
             for (int i = 0; i < size; i++)
             {
                 float a_rand = Engine.rand.Next() % 110 - 55; //range -45,45
-
-                end[i, 0] = len * (float)Math.Cos((this.angle + a_rand) * Engine.PI / 180.0f);
-                end[i, 1] = len * (float)Math.Sin((this.angle + a_rand) * Engine.PI / 180.0f);
+				float l_rand = (float)Engine.rand.NextDouble () * len;
+				end[i, 0] = l_rand * (float)Math.Cos((this.angle + a_rand) * Engine.PI / 180.0f);
+                end[i, 1] = l_rand * (float)Math.Sin((this.angle + a_rand) * Engine.PI / 180.0f);
 
             }
         }
