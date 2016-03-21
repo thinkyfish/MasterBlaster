@@ -14,6 +14,7 @@ namespace MasterBlaster
         public float angle;
 
         public float[] pos;
+		public float rad;
 
         private float vx;
         private float vy;
@@ -49,6 +50,7 @@ namespace MasterBlaster
             this.drag = Engine.SHIP_DRAG;
             this.color = Color.White;
             this.health = 1.0f;
+			this.rad = 0.06f;
         }
 
         public void draw()
@@ -109,7 +111,7 @@ namespace MasterBlaster
             pos[1] = Engine.glrange(pos[1] + dsy);
 
             //define the size and shape of the ship
-            float rad = 0.06f;
+
             float angle1 = angle;
             float angle2 = angle + 130;
             float angle3 = angle - 130;

@@ -273,14 +273,14 @@ namespace MasterBlaster
                 }
 
                 //check for ship collisions
-                for(int i = 0; i < ship.pts.GetLength(0); i++)
-                {
-                    if ((m.health > 0.0f) && (ship.health > 0.0f) && 
-                        m.isWithin(ship.pos[0] + ship.pts[i, 0], ship.pos[1] + ship.pts[i, 1]))
-                    {
-                        ship.health = 0;                       
-                    }
-                }
+				if (dist2 (m.pos [0], m.pos [1], ship.pos [0], ship.pos [1], m.rad + ship.rad)) {
+					for (int i = 0; i < ship.pts.GetLength (0); i++) {
+						if ((m.health > 0.0f) && (ship.health > 0.0f) &&
+						                  m.isWithin (ship.pos [0] + ship.pts [i, 0], ship.pos [1] + ship.pts [i, 1])) {
+							ship.health = 0;                       
+						}
+					}
+				}
 
             }
             //add the kids to the list of meteors *outside* of the foreach
