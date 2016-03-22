@@ -244,7 +244,8 @@ namespace MasterBlaster
         {
             // draw the meteor fill in black
             GL.Color3(Color.Black);
-            GL.Begin(PrimitiveType.Polygon);
+            GL.Begin(PrimitiveType.TriangleFan);
+			GL.Vertex2 (xpos, ypos);
             for (int i = 0; i < size; i++)
             {
                 GL.Vertex2(pts[i, 0] + xpos, pts[i, 1] + ypos);

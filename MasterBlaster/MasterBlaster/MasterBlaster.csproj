@@ -57,6 +57,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ship.cs" />
+    <Compile Include="Button.cs" />
+    <Compile Include="Label.cs" />
+    <Compile Include="Pane.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

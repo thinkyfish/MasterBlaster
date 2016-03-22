@@ -20,17 +20,18 @@ namespace MasterBlaster
         public static void Main()
         {
             Engine engine = new Engine(25);
-            
+
 
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
             using (var game = new MBGameWindow())
             {
-                game.Load += (sender, e) =>
+				game.Load += (sender, e) =>
                 {
                     // setup settings, load textures, sounds
                     game.VSync = VSyncMode.On;
                     //game.WindowBorder = WindowBorder.Hidden;
 					game.fontSetup();
+					game.paneSetup();
                 };
 
                 game.Resize += (sender, e) =>
@@ -102,7 +103,8 @@ namespace MasterBlaster
 
                 game.RenderFrame += (sender, e) =>
                 {
-                    // render graphics
+
+					// render graphics
 					GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                     GL.MatrixMode(MatrixMode.Projection);
@@ -129,7 +131,10 @@ namespace MasterBlaster
 					QFont.Begin();
 					string text = Convert.ToString(engine.score);
 					SizeF len = game.scoreFont.Measure(text);
-					game.printScore(text, new Vector2(game.Width - (len.Width + 50f), 20.0f));
+					Button score = new Button(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f), 0.0f);
+					score.bordercolor = Color.Black;
+					score.draw();
+					game.menuPane.draw();
 					GL.Disable(EnableCap.Texture2D);
                     //b.draw();
 					QFont.End();

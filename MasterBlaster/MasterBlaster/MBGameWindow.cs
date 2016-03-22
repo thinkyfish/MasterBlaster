@@ -17,6 +17,11 @@ namespace MasterBlaster
 
 		public QFont scoreFont;
 		public QFont menuFont;
+		public Pane menuPane;
+		public void paneSetup(){
+			menuPane = new Pane (new RectangleF (100, 100, 300, 300));
+			menuPane.addLabel (new Button ("testbutton", scoreFont, new Vector2 (200, 200), 10f));
+		}
 		public void fontSetup(){
 			string fontRoot = "/usr/share/fonts/truetype/";
 			//var builderConfig = new QFontBuilderConfiguration (true);
