@@ -127,12 +127,14 @@ namespace MasterBlaster
 					engine.draw();
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
 					GL.ClearDepth(1.0f);
+					GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
 					GL.Enable(EnableCap.Blend);
 					QFont.Begin();
 					string text = Convert.ToString(engine.score);
 					SizeF len = game.scoreFont.Measure(text);
 					Button score = new Button(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f), 0.0f);
 					score.bordercolor = Color.Black;
+					score.linewidth = 2.0f;
 					score.draw();
 					game.menuPane.draw();
 					GL.Disable(EnableCap.Texture2D);
