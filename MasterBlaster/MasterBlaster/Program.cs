@@ -19,7 +19,7 @@ namespace MasterBlaster
         [STAThread]
         public static void Main()
         {
-            Engine engine = new Engine(25);
+            Engine engine = new Engine(16);
 
 
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
@@ -32,6 +32,7 @@ namespace MasterBlaster
                     //game.WindowBorder = WindowBorder.Hidden;
 					game.fontSetup();
 					game.paneSetup();
+					game.textSetup();
                 };
 
                 game.Resize += (sender, e) =>
@@ -111,7 +112,8 @@ namespace MasterBlaster
                     GL.LoadIdentity();
                     GL.Viewport(0, 0, game.Width, game.Height);
                     GL.Ortho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
-					GL.Disable( EnableCap.Blend );
+					//GL.Disable( EnableCap.Blend );
+					//GL.Enable(EnableCap.Blend);
 					//GL.BlendFunc(
 
                     //GL.Begin(PrimitiveType.Triangles);
@@ -125,21 +127,29 @@ namespace MasterBlaster
                     //GL.End();
 
 					engine.draw();
-					//GL.Clear(ClearBufferMask.DepthBufferBit);
-					GL.ClearDepth(1.0f);
-					GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
-					GL.Enable(EnableCap.Blend);
-					QFont.Begin();
-					string text = Convert.ToString(engine.score);
-					SizeF len = game.scoreFont.Measure(text);
-					Button score = new Button(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f), 0.0f);
-					score.bordercolor = Color.Black;
-					score.linewidth = 2.0f;
-					score.draw();
-					game.menuPane.draw();
-					GL.Disable(EnableCap.Texture2D);
+					//GL.Clear(ClearBufferMask.DepthBufferBit);///
+					//GL.ClearDepth(1.0f);
+					//GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+					//GL.Enable(EnableCap.Blend);
+					//QFont.Begin();
+					//string text = Convert.ToString(engine.score);
+					//SizeF len = game.scoreFont.Measure(text);
+					//Label score = new Label(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f));
+					//score.draw();
+					if(engine.scorechanged){
+						game.textwriter.Clear();
+
+						game.textwriter.AddLine(Convert.ToString(engine.score),
+							new PointF(game.Width -  50f, 20.0f),
+							new SolidBrush(Color.White));
+					}
+					game.textwriter.Draw();
+
+					//QFont.Begin();
+					//game.menuPane.draw();
+					//GL.Disable(EnableCap.Texture2D);
                     //b.draw();
-					QFont.End();
+					//QFont.End();
 
 					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 

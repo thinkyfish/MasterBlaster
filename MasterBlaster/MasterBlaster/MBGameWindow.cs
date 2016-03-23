@@ -9,6 +9,7 @@ using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
+
 namespace MasterBlaster
 {
     //private Engine engine;
@@ -18,6 +19,10 @@ namespace MasterBlaster
 		public QFont scoreFont;
 		public QFont menuFont;
 		public Pane menuPane;
+		public TextWriter textwriter;
+		public void textSetup(){
+			textwriter = new TextWriter (new Size (Width, Height), new Size (Width, Height));
+		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (100, 100, 300, 300));
 			menuPane.addLabel (new Button ("testbutton", scoreFont, new Vector2 (200, 200), 10f));
@@ -27,11 +32,14 @@ namespace MasterBlaster
 			//var builderConfig = new QFontBuilderConfiguration (true);
 			//var strokeFont = new Font ("Fonts/Simplex.ttf", 20);
 			//menuFont = new QFont(fontRoot + "anonymous-pro/Anonymous Pro.ttf", 25, FontStyle.Regular);
-			scoreFont = new QFont("Fonts/Simplex.ttf", 20, FontStyle.Bold);
+			scoreFont = new QFont ("Fonts/InputMonoNarrow-Thin.ttf", 20);//,FontStyle.Bold);
 			//scoreFont = new QFont(strokeFont, builderConfig);
 			scoreFont.Options.DropShadowActive = false;
 			scoreFont.Options.Colour = new Color4(1.0f, 1.0f, 1.0f, 1.0f);
+			scoreFont.Options.UseDefaultBlendFunction = true;
 			//QFontRenderOptions fontRenderOptions = new QFontRenderOptions();
+
+			//	scoreFont.Options.Monospacing = new QFontMonospacing ();
 			//menuFont.Options.UseDefaultBlendFunction = true;
 			//QFont.CreateTextureFontFiles (strokeFont, "Stroke20");
 			//GL.ClearColor(1.0f, 1.0f, 1.0f, 0.0f);
