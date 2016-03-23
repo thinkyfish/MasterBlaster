@@ -8,6 +8,7 @@ using OpenTK;
 using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System.Drawing.Text;
 
 
 namespace MasterBlaster
@@ -20,8 +21,14 @@ namespace MasterBlaster
 		public QFont menuFont;
 		public Pane menuPane;
 		public TextWriter textwriter;
+		private PrivateFontCollection pfc;
+		private FontFamily[] families;
 		public void textSetup(){
-			textwriter = new TextWriter (new Size (Width, Height), new Size (Width, Height));
+			pfc = new PrivateFontCollection ();
+			pfc.AddFontFile ("Fonts/Simplex.ttf");
+			families = pfc.Families;
+			textwriter = new TextWriter (new Font(families[0], 20, FontStyle.Bold),
+				new Size (Width, Height), new Size (Width, Height));
 		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (100, 100, 300, 300));

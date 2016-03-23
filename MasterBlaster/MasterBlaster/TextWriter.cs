@@ -30,7 +30,7 @@ namespace MasterBlaster
 		}
 
 
-		public TextWriter(Size ClientSize, Size areaSize)
+		public TextWriter(Font f, Size ClientSize, Size areaSize)
 		{
 			_positions = new List<PointF>();
 			_lines = new List<string>();
@@ -39,6 +39,8 @@ namespace MasterBlaster
 			TextBitmap = new Bitmap(areaSize.Width, areaSize.Height);
 			this._clientSize = ClientSize;
 			_textureId = CreateTexture();
+			TextFont = f;
+
 		}
 
 		private int CreateTexture()
@@ -90,7 +92,8 @@ namespace MasterBlaster
 					gfx.Clear(Color.Black);
 					gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 					for (int i = 0; i < _lines.Count; i++)
-						gfx.DrawString(_lines[i], TextFont, _colours[i], _positions[i]);
+						gfx.DrawString(_lines[i], TextFont, _colours[i], _positions[i],
+							new StringFormat(StringFormatFlags.DirectionRightToLeft));
 				}
 
 				System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
