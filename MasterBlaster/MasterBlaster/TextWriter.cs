@@ -10,7 +10,7 @@ namespace MasterBlaster
 {
 
 
-	class TextWriter
+	public class TextWriter
 	{
 		private readonly Font TextFont = new Font(FontFamily.GenericMonospace, 20);
 		private readonly Bitmap TextBitmap;
@@ -19,6 +19,7 @@ namespace MasterBlaster
 		private List<Brush> _colours;
 		private int _textureId;
 		private Size _clientSize;
+		private StringFormatFlags flags;
 
 		public void Update(int ind, string newText)
 		{
@@ -30,7 +31,7 @@ namespace MasterBlaster
 		}
 
 
-		public TextWriter(Font f, Size ClientSize, Size areaSize)
+		public TextWriter(Font f, Size ClientSize, Size areaSize, StringFormatFlags flags = StringFormatFlags.NoFontFallback)
 		{
 			_positions = new List<PointF>();
 			_lines = new List<string>();
@@ -40,6 +41,7 @@ namespace MasterBlaster
 			this._clientSize = ClientSize;
 			_textureId = CreateTexture();
 			TextFont = f;
+			this.flags = flags;
 
 		}
 
@@ -93,7 +95,7 @@ namespace MasterBlaster
 					gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 					for (int i = 0; i < _lines.Count; i++)
 						gfx.DrawString(_lines[i], TextFont, _colours[i], _positions[i],
-							new StringFormat(StringFormatFlags.DirectionRightToLeft));
+							new StringFormat(flags));
 				}
 
 				System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),
@@ -120,7 +122,7 @@ namespace MasterBlaster
 			GL.BindTexture(TextureTarget.Texture2D, _textureId);
 
 
-			GL.Begin(BeginMode.Quads);
+			GL.Begin(PrimitiveType.Quads);
 			GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
 			GL.TexCoord2(1, 0); GL.Vertex2(TextBitmap.Width, 0);
 			GL.TexCoord2(1, 1); GL.Vertex2(TextBitmap.Width, TextBitmap.Height);

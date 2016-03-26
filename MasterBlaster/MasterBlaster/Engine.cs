@@ -165,8 +165,8 @@ namespace MasterBlaster
         {
             if (firing && cyclebullet())
             {
-                float x = ship.pts[0, 0] + ship.pos[0];
-                float y = ship.pts[0, 1] + ship.pos[1];
+                float x = ship.pts[0, 0] + ship.position[0];
+                float y = ship.pts[0, 1] + ship.position[1];
 
                 float vel = BULLET_VEL;
                 Bullet b = new Bullet(x, y, ship.angle, vel);
@@ -275,10 +275,10 @@ namespace MasterBlaster
                 }
 
                 //check for ship collisions
-				if (dist2 (m.pos [0], m.pos [1], ship.pos [0], ship.pos [1], m.rad + ship.rad)) {
+				if (dist2 (m.pos [0], m.pos [1], ship.position [0], ship.position [1], m.rad + ship.rad)) {
 					for (int i = 0; i < ship.pts.GetLength (0); i++) {
 						if ((m.health > 0.0f) && (ship.health > 0.0f) &&
-						                  m.isWithin (ship.pos [0] + ship.pts [i, 0], ship.pos [1] + ship.pts [i, 1])) {
+						                  m.isWithin (ship.position [0] + ship.pts [i, 0], ship.position [1] + ship.pts [i, 1])) {
 							ship.health = 0;                       
 						}
 					}
@@ -325,11 +325,11 @@ namespace MasterBlaster
         }
         public void newMeteor(int size = METEOR_PTS)
         {
-            float mx = ship.pos[0];
-            float my = ship.pos[1];
+            float mx = ship.position[0];
+            float my = ship.position[1];
 
             // generate a position -1 to 1 that is at least .25 away from the ship
-            while (dist2(ship.pos[0],ship.pos[1], mx, my, 0.25f))
+            while (dist2(ship.position[0],ship.position[1], mx, my, 0.25f))
             {
 
                 mx = (float)(rand.NextDouble() * 2.0 - 1.0);

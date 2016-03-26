@@ -26,7 +26,7 @@ namespace MasterBlaster
 		}
 		public void draw(){
 	
-			GL.Disable (EnableCap.Texture2D);
+		GL.Disable (EnableCap.Texture2D);
 
 			//draw background square
 			GL.Color3 (backgroundcolor);
@@ -49,7 +49,7 @@ namespace MasterBlaster
 			GL.End ();
 
 			//draw labels
-			contents.ForEach (c => c.draw ());
+			//contents.ForEach (c => c.draw ());
 
 		}
 	}

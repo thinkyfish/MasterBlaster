@@ -13,7 +13,9 @@ namespace MasterBlaster
     {
         public float angle;
 
-        public float[] pos;
+		public float[] position { get; set; }
+		public float[,] shadowpos;
+		public int shadows = 8;
 		public float rad;
 
         private float vx;
@@ -33,7 +35,7 @@ namespace MasterBlaster
 
         public float[,] pts;
 
-        private Color color;
+		private static Color color = Color.White;
 
         public float health;
 
@@ -43,36 +45,60 @@ namespace MasterBlaster
             this.vy = 0.0f;
             this.ax = 0.0f;
             this.pts = new float[4, 2];
-            this.pos = new float[2];
-            this.pos[0] = x;
-            this.pos[1] = y;
+            this.position = new float[2];
+            this.position[0] = x;
+            this.position[1] = y;
             this.angle = 90.0f;
             this.drag = Engine.SHIP_DRAG;
-            this.color = Color.White;
+            //this.color = Color.White;
             this.health = 1.0f;
 			this.rad = 0.06f;
+			this.shadowpos = new float[shadows, 2];
         }
 
         public void draw()
         {
-            if (health > 0.0f)
-            {
-                GL.LineWidth(1.0f);
-                GL.Color3(this.color);
-
-                //draw the edge lines
-                GL.Begin(PrimitiveType.LineStrip);
-                for (int i = 0; i < 4; i++)
-                    GL.Vertex2(pos[0] + pts[i, 0],
-                       pos[1] + pts[i, 1]);
-
-                //connect last to first
-                GL.Vertex2(pos[0] + pts[0, 0],
-                       pos[1] + pts[0, 1]);
-
-                GL.End();
-            }
+			drawshipimage (position[0], position[1]);
+			//loop over the possible intruding edges, checking if any are visible and if so, draw them.
+			if (position[0] > 1.0f - rad || position[0] < -1.0f + rad ||
+				position[1] > 1.0f - rad || position[1] < -1.0f + rad)
+			{
+				for (int i = 0; i < shadows; i++)
+				{
+					//if (onscreen(shadowpos[i, 0], shadowpos[i, 1])) // don't need this. its faster to just draw them all.
+					//{
+					drawshipimage(shadowpos[i, 0], shadowpos[i, 1]);
+					//}
+				}
+			}
+				
         }
+		public void drawshipimage(float xpos, float ypos){
+			GL.LineWidth(1.0f);
+			GL.Color3(color);
+
+			//draw the edge lines
+			GL.Begin(PrimitiveType.LineStrip);
+			for (int i = 0; i < 4; i++)
+				GL.Vertex2(xpos + pts[i, 0],
+					ypos + pts[i, 1]);
+
+			//connect last to first
+			GL.Vertex2(xpos + pts[0, 0],
+				ypos + pts[0, 1]);
+
+			GL.End();
+		}
+
+		public float shadowWarp(float position)
+		{
+			if (position > (1.0f + rad))
+				position -= 2.0f;
+			if (position < (-1.0f) - rad)
+				position += 2.0f;
+			return position;
+		}
+
 
         public void engine(float thrust = Engine.SHIP_THRUST)
         {
@@ -107,27 +133,65 @@ namespace MasterBlaster
             dsy = vy * dt;
 
             // warp at edge of screen
-            pos[0] = Engine.glrange(pos[0] + dsx);
-            pos[1] = Engine.glrange(pos[1] + dsy);
-
-            //define the size and shape of the ship
-
-            float angle1 = angle;
-            float angle2 = angle + 130;
-            float angle3 = angle - 130;
-
-            // Recompute the ships lines based on the angle
-            pts[0, 0] = rad * (float)Math.Cos(angle1 * Engine.PI / 180.0f);
-            pts[0, 1] = rad * (float)Math.Sin(angle1 * Engine.PI / 180.0f);
-            pts[1, 0] = rad * (float)Math.Cos(angle2 * Engine.PI / 180.0f);
-            pts[1, 1] = rad * (float)Math.Sin(angle2 * Engine.PI / 180.0f);
-            pts[2, 0] = 0.0f;
-            pts[2, 1] = 0.0f;
-            pts[3, 0] = rad * (float)Math.Cos(angle3 * Engine.PI / 180.0f);
-            pts[3, 1] = rad * (float)Math.Sin(angle3 * Engine.PI / 180.0f);
-
-
+            position[0] = Engine.glrange(position[0] + dsx);
+            position[1] = Engine.glrange(position[1] + dsy);
+			setshadow (position);
+			setAngle (angle);
+            
         }
+
+		public void setAngle(float angle){
+			//define the size and shape of the ship
+
+			float angle1 = angle;
+			float angle2 = angle + 130;
+			float angle3 = angle - 130;
+
+			// Recompute the ships lines based on the angle
+			pts[0, 0] = rad * (float)Math.Cos(angle1 * Engine.PI / 180.0f);
+			pts[0, 1] = rad * (float)Math.Sin(angle1 * Engine.PI / 180.0f);
+			pts[1, 0] = rad * (float)Math.Cos(angle2 * Engine.PI / 180.0f);
+			pts[1, 1] = rad * (float)Math.Sin(angle2 * Engine.PI / 180.0f);
+			pts[2, 0] = 0.0f;
+			pts[2, 1] = 0.0f;
+			pts[3, 0] = rad * (float)Math.Cos(angle3 * Engine.PI / 180.0f);
+			pts[3, 1] = rad * (float)Math.Sin(angle3 * Engine.PI / 180.0f);
+
+
+		}
+
+
+		//set the shadow position array to all possible corresponding positions outside the field of view.
+		public void setshadow(float[] position)
+		{
+			shadowpos[0, 0] = position[0];
+			shadowpos[0, 1] = position[1] + 2.0f;
+
+			shadowpos[1, 0] = position[0] + 2.0f;
+			shadowpos[1, 1] = position[1];
+
+			shadowpos[2, 0] = position[0];
+			shadowpos[2, 1] = position[1] - 2.0f;
+
+			shadowpos[3, 0] = position[0] - 2.0f;
+			shadowpos[3, 1] = position[1];
+
+			shadowpos[4, 0] = position[0] - 2.0f;
+			shadowpos[4, 1] = position[1] + 2.0f;
+
+			shadowpos[5, 0] = position[0] + 2.0f;
+			shadowpos[5, 1] = position[1] - 2.0f;
+
+			shadowpos[6, 0] = position[0] - 2.0f;
+			shadowpos[6, 1] = position[1] - 2.0f;
+
+			shadowpos[7, 0] = position[0] + 2.0f;
+			shadowpos[7, 1] = position[1] + 2.0f;
+
+
+
+		}
+
 
     }
 }
