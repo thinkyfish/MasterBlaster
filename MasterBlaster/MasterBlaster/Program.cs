@@ -19,7 +19,7 @@ namespace MasterBlaster
         [STAThread]
         public static void Main()
         {
-            Engine engine = new Engine(16);
+            Engine engine = new Engine(50);
 
 
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);

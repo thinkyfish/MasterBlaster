@@ -18,6 +18,7 @@ namespace MasterBlaster
         private Ship ship;
         private int bulletcycle = 0;
         private bool firing;
+		private bool fire;
         private bool thrusting;
         private float turning;
         public int level = 8;
@@ -46,9 +47,9 @@ namespace MasterBlaster
 
         public const float BULLET_SIZE = 3.0f;
         public const float BULLET_VEL = 10.0f;
-        public const float BULLET_RANGE = 0.016f;  //this is range squared
+        public const float BULLET_RANGE = 0.008f;  //this is range squared
         public const int BULLET_DAMAGE = 100;
-        public const int FIRE_CYCLE = 11;
+        public const int FIRE_CYCLE = 8;
         public const float SHIP_TURN = 3.0f;
         public const float SHIP_THRUST = 100.4f;
         public const float SHIP_DRAG = 0.008f;
@@ -142,11 +143,12 @@ namespace MasterBlaster
         private bool cyclebullet()
         {
             bool fire = false;
-            if (bulletcycle == 0)
-                fire = true;
-            // cycle the value 
-            this.bulletcycle += 1;
-            this.bulletcycle %= FIRE_CYCLE;
+
+			if (bulletcycle == 0)
+				fire = true;
+			else if( this.bulletcycle > 0 )
+				this.bulletcycle -= 1;
+            
             return fire;
         }
         public void startfiring()
@@ -155,15 +157,20 @@ namespace MasterBlaster
             ////if (!firing)
             //    bulletcycle = 0;
             firing = true;
+			fire_bullet ();
+
         }
         public void stopfiring()
         {
             //bulletcycle = 0;
-            firing = false;
+
+				
+				firing = false;
+		
         }
         public void fire_bullet()
         {
-            if (firing && cyclebullet())
+			if (cyclebullet() && firing)
             {
                 float x = ship.pts[0, 0] + ship.position[0];
                 float y = ship.pts[0, 1] + ship.position[1];
@@ -172,6 +179,8 @@ namespace MasterBlaster
                 Bullet b = new Bullet(x, y, ship.angle, vel);
                 b.ax = ship.ax + ship.fx;
                 bulletlist.Add(b);
+				bulletcycle = FIRE_CYCLE;
+				//firing = false;
             }
         }
         public void startThrusting(float direction = 1.0f)
@@ -195,7 +204,7 @@ namespace MasterBlaster
         public void nextframe(float dt = Engine.DT)
         {
             //fire bullets if needed
-            if (firing) fire_bullet();
+            fire_bullet();
             if(turning != 0.0f)
             {
                 ship.angle += turning * SHIP_TURN;
@@ -328,8 +337,9 @@ namespace MasterBlaster
             float mx = ship.position[0];
             float my = ship.position[1];
 
-            // generate a position -1 to 1 that is at least .25 away from the ship
-            while (dist2(ship.position[0],ship.position[1], mx, my, 0.25f))
+			float maxrad =  0.2f * ((float)size / (float)Engine.METEOR_PTS);
+            // generate a position -1 to 1 that is at least .1 away from the ship
+			while (dist2(ship.position[0],ship.position[1], mx, my, maxrad + 0.1f))
             {
 
                 mx = (float)(rand.NextDouble() * 2.0 - 1.0);
