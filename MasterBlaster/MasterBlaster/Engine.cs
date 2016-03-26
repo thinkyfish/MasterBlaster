@@ -180,6 +180,7 @@ namespace MasterBlaster
                 b.ax = ship.ax + ship.fx;
                 bulletlist.Add(b);
 				bulletcycle = FIRE_CYCLE;
+				score -= 1;
 				//firing = false;
             }
         }

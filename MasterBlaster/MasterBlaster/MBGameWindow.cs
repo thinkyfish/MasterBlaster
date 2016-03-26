@@ -30,7 +30,7 @@ namespace MasterBlaster
 				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);
 		}
 		public void paneSetup(){
-			menuPane = new Pane (new RectangleF (100, 100, 300, 300));
+			menuPane = new Pane (new RectangleF (0.1f, 0.1f, 0.5f, 0.5f));
 			menuPane.addLabel (new Button ("testbutton", scoreWriter, new Vector2 (200, 200), 10f));
 		}
 

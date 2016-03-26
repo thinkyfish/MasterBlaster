@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using QuickFont;
+//using QuickFont;
 
 namespace MasterBlaster
 {
@@ -19,7 +19,7 @@ namespace MasterBlaster
         [STAThread]
         public static void Main()
         {
-            Engine engine = new Engine(50);
+            Engine engine = new Engine(8);
 
 
             //Bullet b = new Bullet(100.0f, 100.0f, 35f);
@@ -129,9 +129,9 @@ namespace MasterBlaster
 
 					engine.draw();
 					/////
-					//GL.ClearDepth(1.0f);
-					//GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
-					//GL.Enable(EnableCap.Blend);
+					GL.ClearDepth(1.0f);
+					GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+					GL.Enable(EnableCap.Blend);
 					//QFont.Begin();
 					//string text = Convert.ToString(engine.score);
 					//SizeF len = game.scoreFont.Measure(text);
@@ -143,19 +143,16 @@ namespace MasterBlaster
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
 							new PointF(game.Width -  50f, 20.0f),
 							new SolidBrush(Color.White));
-					//}
+
 					game.scoreWriter.Draw();
-					GL.Enable(EnableCap.Texture2D);
+					//GL.Enable(EnableCap.Texture2D);
 
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
-
+					GL.Disable(EnableCap.Blend);
 					//QFont.Begin();
 					game.menuPane.draw();
-					GL.Disable(EnableCap.Texture2D);
-					//
-                    //b.draw();
-					//QFont.End();
-
+					//GL.Disable(EnableCap.Texture2D);
+	
 					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                     game.SwapBuffers();

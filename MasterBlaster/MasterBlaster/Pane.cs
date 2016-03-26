@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using QuickFont;
+
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
@@ -12,7 +12,7 @@ namespace MasterBlaster
 		private Color bordercolor;
 		private Color backgroundcolor;
 		private float linewidth;
-		private List<MasterBlaster.Label> contents;
+		private List<Label> contents;
 		public Pane (RectangleF bounds, float linewidth = 1.0f)
 		{
 			this.bordercolor = Color.White;
@@ -26,7 +26,7 @@ namespace MasterBlaster
 		}
 		public void draw(){
 	
-		GL.Disable (EnableCap.Texture2D);
+			//GL.Disable (EnableCap.Texture2D);
 
 			//draw background square
 			GL.Color3 (backgroundcolor);
@@ -49,7 +49,7 @@ namespace MasterBlaster
 			GL.End ();
 
 			//draw labels
-			//contents.ForEach (c => c.draw ());
+			contents.ForEach (c => c.draw ());
 
 		}
 	}
