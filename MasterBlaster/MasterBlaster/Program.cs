@@ -38,15 +38,18 @@ namespace MasterBlaster
 
                 game.Resize += (sender, e) =>
                 {
-                    //TODO: this doesn't work.
+                    
                     //int max = game.Width;
-                    //if (game.Height > game.Width)
+					if (game.Height < 600)
+						game.Height = 600;
+					if (game.Width < 600)
+						game.Width = 600;
                     //    max = game.Height;
                     //game.Width = max;
                     //game.Height = max;
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
-                    GL.Viewport(0, 0,game.Width, game.Height);
+                    //GL.Viewport(0, 0, game.Width, game.Height);
                 };
                 game.KeyDown += (sender, e) =>
                 {
@@ -95,6 +98,7 @@ namespace MasterBlaster
                 };
                 game.UpdateFrame += (sender, e) =>
                 {
+
                     // add game logic, input handling
                     if (game.Keyboard[Key.Escape])
                     {
@@ -108,6 +112,10 @@ namespace MasterBlaster
                 game.RenderFrame += (sender, e) =>
                 {
 
+					if (game.Height < 600)
+						game.Height = 600;
+					if (game.Width < 600)
+						game.Width = 600;
 					// render graphics
 					GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
@@ -143,7 +151,7 @@ namespace MasterBlaster
 					game.scoreWriter.Clear();
 
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
-							new PointF(game.Width -  50f, 20.0f),
+							new PointF(game.Width - 50f, 20.0f),
 							new SolidBrush(Color.White));
 
 					game.scoreWriter.Draw();

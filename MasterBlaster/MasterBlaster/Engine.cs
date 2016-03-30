@@ -345,8 +345,8 @@ namespace MasterBlaster
             // generate a position -1 to 1 that is at least .1 away from the ship
 			while (dist2(ship.position[0],ship.position[1], mx, my, maxrad + 0.1f))
             {
-				float width = ViewY * 2;
-				float height = ViewX * 2;
+				float width = ViewX * 2.0f;
+				float height = ViewY * 2.0f;
                 mx = (float)(rand.NextDouble() * width - ViewX);
 				my = (float)(rand.NextDouble() * height - ViewY);
 

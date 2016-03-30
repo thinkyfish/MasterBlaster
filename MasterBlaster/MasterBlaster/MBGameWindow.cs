@@ -17,7 +17,7 @@ namespace MasterBlaster
     class MBGameWindow : GameWindow
     {
 
-
+		public bool resize = false;
 		public Pane menuPane;
 		public TextWriter scoreWriter;
 		public TextWriter buttonWriter;
