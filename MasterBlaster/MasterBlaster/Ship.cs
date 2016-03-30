@@ -133,8 +133,8 @@ namespace MasterBlaster
             dsy = vy * dt;
 
             // warp at edge of screen
-            position[0] = Engine.glrange(position[0] + dsx);
-            position[1] = Engine.glrange(position[1] + dsy);
+			position[0] = Engine.glrange(position[0] + dsx, Engine.ViewX);
+			position[1] = Engine.glrange(position[1] + dsy, Engine.ViewY);
 			setshadow (position);
 			setAngle (angle);
             
@@ -164,29 +164,32 @@ namespace MasterBlaster
 		//set the shadow position array to all possible corresponding positions outside the field of view.
 		public void setshadow(float[] position)
 		{
-			shadowpos[0, 0] = position[0];
-			shadowpos[0, 1] = position[1] + 2.0f;
+			float xsize = Engine.ViewX * 2.0f;
+			float ysize = Engine.ViewY * 2.0f;
 
-			shadowpos[1, 0] = position[0] + 2.0f;
+			shadowpos[0, 0] = position[0];
+			shadowpos[0, 1] = position[1] + ysize;
+
+			shadowpos[1, 0] = position[0] + xsize;
 			shadowpos[1, 1] = position[1];
 
 			shadowpos[2, 0] = position[0];
-			shadowpos[2, 1] = position[1] - 2.0f;
+			shadowpos[2, 1] = position[1] - ysize;
 
-			shadowpos[3, 0] = position[0] - 2.0f;
+			shadowpos[3, 0] = position[0] - xsize;
 			shadowpos[3, 1] = position[1];
 
-			shadowpos[4, 0] = position[0] - 2.0f;
-			shadowpos[4, 1] = position[1] + 2.0f;
+			shadowpos[4, 0] = position[0] - xsize;
+			shadowpos[4, 1] = position[1] + ysize;
 
-			shadowpos[5, 0] = position[0] + 2.0f;
-			shadowpos[5, 1] = position[1] - 2.0f;
+			shadowpos[5, 0] = position[0] + xsize;
+			shadowpos[5, 1] = position[1] - ysize;
 
-			shadowpos[6, 0] = position[0] - 2.0f;
-			shadowpos[6, 1] = position[1] - 2.0f;
+			shadowpos[6, 0] = position[0] - xsize;
+			shadowpos[6, 1] = position[1] - ysize;
 
-			shadowpos[7, 0] = position[0] + 2.0f;
-			shadowpos[7, 1] = position[1] + 2.0f;
+			shadowpos[7, 0] = position[0] + xsize;
+			shadowpos[7, 1] = position[1] + ysize;
 
 
 

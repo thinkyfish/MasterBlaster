@@ -20,10 +20,11 @@ namespace MasterBlaster
 			this.text = text;
 			this.location = new PointF (location.X, location.Y);
 			this.brush = new SolidBrush (Color.White);
-			this.writer.AddLine (text, this.location, brush);
+			//this.writer.AddLine (text, this.location, brush);
 
 		}
 		public virtual void draw(){
+			writer.Clear ();
 			writer.AddLine (text, location, brush);
 			writer.Draw ();
 //				GL.ClearDepth(0.0);

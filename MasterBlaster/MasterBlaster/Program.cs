@@ -39,11 +39,13 @@ namespace MasterBlaster
                 game.Resize += (sender, e) =>
                 {
                     //TODO: this doesn't work.
-                    int max = game.Width;
-                    if (game.Height > game.Width)
-                        max = game.Height;
+                    //int max = game.Width;
+                    //if (game.Height > game.Width)
+                    //    max = game.Height;
                     //game.Width = max;
                     //game.Height = max;
+					Engine.ViewY = 1.0f;
+					Engine.ViewX = 1.0f * game.Width / game.Height;
                     GL.Viewport(0, 0,game.Width, game.Height);
                 };
                 game.KeyDown += (sender, e) =>
@@ -111,8 +113,8 @@ namespace MasterBlaster
 
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadIdentity();
-                    GL.Viewport(0, 0, game.Width, game.Height);
-                    GL.Ortho(-1.0, 1.0, -1.0, 1.0, -1.0, 1.0);
+					GL.Viewport(0, 0, game.Width, game.Height);
+					GL.Ortho(-Engine.ViewX, Engine.ViewX, -Engine.ViewY, Engine.ViewY, -1.0, 1.0);
 					//GL.Disable( EnableCap.Blend );
 					//GL.Enable(EnableCap.Blend);
 					//GL.BlendFunc(
@@ -152,7 +154,7 @@ namespace MasterBlaster
 					//QFont.Begin();
 					game.menuPane.draw();
 					//GL.Disable(EnableCap.Texture2D);
-	
+				
 					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                     game.SwapBuffers();

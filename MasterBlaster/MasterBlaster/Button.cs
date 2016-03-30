@@ -19,7 +19,7 @@ namespace MasterBlaster
 
 		}
 		public override void draw(){
-			base.draw();
+
 //			GL.Disable(EnableCap.Texture2D);
 //			GL.Color4 (bordercolor);
 //			GL.LineWidth (linewidth);
@@ -29,6 +29,7 @@ namespace MasterBlaster
 //			GL.Vertex3(bounds.X + bounds.Width, bounds.Y + bounds.Height, 0f);
 //			GL.Vertex3(bounds.X, bounds.Y + bounds.Height, 0f);
 //			GL.End();
+			base.draw();
 
 
 		}

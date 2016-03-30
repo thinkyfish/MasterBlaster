@@ -47,6 +47,7 @@ namespace MasterBlaster
 			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, 0f);
 			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, 0f);
 			GL.End ();
+			GL.Enable (EnableCap.Blend);
 
 			//draw labels
 			contents.ForEach (c => c.draw ());

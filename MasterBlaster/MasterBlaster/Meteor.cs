@@ -39,29 +39,32 @@ namespace MasterBlaster
         //set the shadow position array to all possible corresponding positions outside the field of view.
         public void setshadow(float[] position)
         {
-            shadowpos[0, 0] = position[0];
-            shadowpos[0, 1] = position[1] + 2.0f;
+			float xsize = Engine.ViewX * 2.0f;
+			float ysize = Engine.ViewY * 2.0f;
 
-            shadowpos[1, 0] = position[0] + 2.0f;
+            shadowpos[0, 0] = position[0];
+            shadowpos[0, 1] = position[1] + ysize;
+
+            shadowpos[1, 0] = position[0] + xsize;
             shadowpos[1, 1] = position[1];
 
             shadowpos[2, 0] = position[0];
-            shadowpos[2, 1] = position[1] - 2.0f;
+            shadowpos[2, 1] = position[1] - ysize;
 
-            shadowpos[3, 0] = position[0] - 2.0f;
+            shadowpos[3, 0] = position[0] - xsize;
             shadowpos[3, 1] = position[1];
 
-            shadowpos[4, 0] = position[0] - 2.0f;
-            shadowpos[4, 1] = position[1] + 2.0f;
+            shadowpos[4, 0] = position[0] - xsize;
+            shadowpos[4, 1] = position[1] + ysize;
 
-            shadowpos[5, 0] = position[0] + 2.0f;
-            shadowpos[5, 1] = position[1] - 2.0f;
+            shadowpos[5, 0] = position[0] + xsize;
+            shadowpos[5, 1] = position[1] - ysize;
 
-            shadowpos[6, 0] = position[0] - 2.0f;
-            shadowpos[6, 1] = position[1] - 2.0f;
+            shadowpos[6, 0] = position[0] - xsize;
+            shadowpos[6, 1] = position[1] - ysize;
 
-            shadowpos[7, 0] = position[0] + 2.0f;
-            shadowpos[7, 1] = position[1] + 2.0f;
+            shadowpos[7, 0] = position[0] + xsize;
+            shadowpos[7, 1] = position[1] + ysize;
 
 
 
@@ -97,9 +100,9 @@ namespace MasterBlaster
             if (isWithinPos(x, y, pos[0], pos[1]))
                 return true;
 
-            // do the same checks for all the shadows
-            if (pos[0] > 1.0 - maxrad || pos[0] < -1.0 + maxrad ||
-                pos[1] > 1.0 - maxrad || pos[1] < -1.0 + maxrad)
+            // if the meteor is within max radius of the edge of the screen, check the shadows
+			if (pos[0] > Engine.ViewX - maxrad || pos[0] < -Engine.ViewX + maxrad ||
+				pos[1] > Engine.ViewY - maxrad || pos[1] < -Engine.ViewY + maxrad)
                 
             {
                 for (int i = 0; i < shadows; i++)
@@ -140,12 +143,14 @@ namespace MasterBlaster
             // no collision found
             return false;
         }
-        public float shadowWarp(float position)
+
+
+		public float shadowWarp(float position, float bound)
         {
-            if (position > (1.0f + maxrad))
-                position -= 2.0f;
-            if (position < (-1.0f) - maxrad)
-                position += 2.0f;
+            if (position > (bound + maxrad))
+                position -= 2.0f * bound;
+            if (position < (-bound) - maxrad)
+                position += 2.0f * bound;
             return position;
         }
 
@@ -212,8 +217,11 @@ namespace MasterBlaster
             //compute the new positions and correct if off the edge of the screen.
             //pos[0] = Engine.glrange(pos[0] + dpx);
             //pos[1] = Engine.glrange(pos[1] + dpy);
-            pos[0] = shadowWarp(pos[0] + dpx);
-            pos[1] = shadowWarp(pos[1] + dpy);
+			//pos[0] = Engine.glrange(pos[0] + dpx, Engine.ViewX + maxrad);
+			//pos[1] = Engine.glrange(pos[1] + dpy, Engine.ViewY + maxrad);
+			pos [0] = shadowWarp (pos [0] + dpx, Engine.ViewX);
+			pos [1] = shadowWarp (pos [1] + dpy, Engine.ViewY);
+
 
             //reset the off screen shadow origins
             setshadow(pos);
@@ -226,8 +234,8 @@ namespace MasterBlaster
             drawpos(this.pos[0], this.pos[1]);
 
             //loop over the possible intruding edges, checking if any are visible and if so, draw them.
-            if (pos[0] > 1.0f - maxrad || pos[0] < -1.0f + maxrad ||
-                pos[1] > 1.0f - maxrad || pos[1] < -1.0f + maxrad)
+			if (pos[0] > Engine.ViewX - maxrad || pos[0] < -Engine.ViewX + maxrad ||
+				pos[1] > Engine.ViewY - maxrad || pos[1] < -Engine.ViewY + maxrad)
             {
                 for (int i = 0; i < shadows; i++)
                 {

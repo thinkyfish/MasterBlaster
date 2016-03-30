@@ -66,8 +66,8 @@ namespace MasterBlaster
             dr = Engine.distsq(pos, pos[0] + dsx, pos[1] + dsy);
 
             // set position and account for screen edges
-            pos[0] = Engine.glrange(pos[0] + dsx);
-            pos[1] = Engine.glrange(pos[1] + dsy);      
+			pos[0] = Engine.glrange(pos[0] + dsx, Engine.ViewX);
+			pos[1] = Engine.glrange(pos[1] + dsy, Engine.ViewY);      
 
             //keep track of the distance
             dist += dr;

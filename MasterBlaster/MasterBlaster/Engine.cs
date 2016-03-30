@@ -74,6 +74,9 @@ namespace MasterBlaster
         public const int NUMSCORES = 8;
         public const string SCOREFILE = "scores.dat";
         public const string SCOREFILEBAK = "scores.dat~";
+		public static float ViewX = 2.0f;
+		
+		public static float ViewY = 1.0f;
 
         public void nextlevel(int l)
         {
@@ -103,7 +106,7 @@ namespace MasterBlaster
         }
 
 
-        public static float glrange(float a)
+		public static float glrange(float a, float bound = 1.0f)
         {
             //if (a > 1.015625f)
             //    a -= 2.03125f;
@@ -113,10 +116,10 @@ namespace MasterBlaster
             //    return a;
             //else
             //    return -2f;
-            if (a > 1.0f)
-                a -= 2.0f;
-            else if (a < -1.0f)
-                a += 2.0f;
+            if (a > bound)
+                a -= 2.0f*bound;
+            else if (a < -bound)
+                a += 2.0f*bound;
 
             return a;
 
@@ -342,9 +345,10 @@ namespace MasterBlaster
             // generate a position -1 to 1 that is at least .1 away from the ship
 			while (dist2(ship.position[0],ship.position[1], mx, my, maxrad + 0.1f))
             {
-
-                mx = (float)(rand.NextDouble() * 2.0 - 1.0);
-                my = (float)(rand.NextDouble() * 2.0 - 1.0);
+				float width = ViewY * 2;
+				float height = ViewX * 2;
+                mx = (float)(rand.NextDouble() * width - ViewX);
+				my = (float)(rand.NextDouble() * height - ViewY);
 
             }
             meteorlist.Add(new Meteor(size, mx, my));
