@@ -27,10 +27,17 @@ namespace MasterBlaster
 			pfc = new PrivateFontCollection ();
 			pfc.AddFontFile ("Fonts/Anonymous Pro.ttf");
 			families = pfc.Families;
-			scoreWriter = new TextWriter (new Font(families[0], 20),
-				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);
+			this.setupScoreFont ();
+			this.setupButtonFont ();
+		}
+		public void setupButtonFont(){
 			buttonWriter = new TextWriter (new Font(families[0], 20),
 				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);
+
+		}
+		public void setupScoreFont(){
+			scoreWriter = new TextWriter (new Font(families[0], 20),
+				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);		
 		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (0.1f, 0.1f, 0.5f, 0.5f));

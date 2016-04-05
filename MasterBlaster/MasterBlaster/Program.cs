@@ -49,6 +49,9 @@ namespace MasterBlaster
                     //game.Height = max;
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
+					//game.scoreWriter.Dispose();
+					//game.setupScoreFont();
+					//game.scoreWriter.UpdateText();
                     //GL.Viewport(0, 0, game.Width, game.Height);
                 };
                 game.KeyDown += (sender, e) =>
@@ -151,7 +154,7 @@ namespace MasterBlaster
 					game.scoreWriter.Clear();
 
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
-							new PointF(game.Width - 50f, 20.0f),
+						new PointF(game.Width - (20 + (game.Width - 600)), 20.0f),
 							new SolidBrush(Color.White));
 
 					game.scoreWriter.Draw();
