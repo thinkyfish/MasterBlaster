@@ -32,7 +32,7 @@ namespace MasterBlaster
                     //game.WindowBorder = WindowBorder.Hidden;
 					//game.fontSetup();
 					game.textSetup();
-					//game.paneSetup();
+					game.paneSetup();
 
                 };
 
@@ -154,7 +154,7 @@ namespace MasterBlaster
 					game.scoreWriter.Clear();
 
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
-						new PointF(game.Width - ( -10.0f  + (game.Width - 600)), 20.0f),
+						new PointF(game.Width - ( (game.Width - 600)), 20.0f),
 							new SolidBrush(Color.White));
 
 					game.scoreWriter.Draw();
@@ -163,10 +163,10 @@ namespace MasterBlaster
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
 					GL.Disable(EnableCap.Blend);
 					//QFont.Begin();
-					game.buttonWriter.Clear();
-					game.buttonWriter.AddLine("test", new PointF(100.0f,20.0f), new SolidBrush(Color.White));
-					game.buttonWriter.Draw();
-					//game.menuPane.draw();
+//					game.buttonWriter.Clear();
+//					game.buttonWriter.AddLine("test", new PointF(100.0f,20.0f), new SolidBrush(Color.White));
+//					game.buttonWriter.Draw();
+					game.menuPane.draw();
 					//GL.Disable(EnableCap.Texture2D);
 				
 					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

@@ -32,7 +32,7 @@ namespace MasterBlaster
 		}
 		public void setupButtonFont(){
 			buttonWriter = new TextWriter (new Font(families[0], 20),
-				new Size (Width, Height), new Size (Width, 50), TextWriter.Alignment.Left);
+				new Size (Width, Height), new Size (Width, 50), TextWriter.Alignment.Center);
 
 		}
 		public void setupScoreFont(){
@@ -41,7 +41,7 @@ namespace MasterBlaster
 		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (0.1f, 0.1f, 0.5f, 0.5f));
-			menuPane.addLabel (new Button ("testbutton", buttonWriter, new Vector2 (100, 100), 10f));
+			menuPane.addLabel (new Button ("testbutton", buttonWriter, new Vector2 (Width/2, 0), 10f));
 		}
 
     }	
