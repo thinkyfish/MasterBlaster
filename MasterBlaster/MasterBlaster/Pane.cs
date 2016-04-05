@@ -28,26 +28,26 @@ namespace MasterBlaster
 	
 			//GL.Disable (EnableCap.Texture2D);
 
-			//draw background square
-			GL.Color3 (backgroundcolor);
-			GL.Begin (PrimitiveType.Polygon);
-			GL.Vertex2 (bounds.X, bounds.Y);
-			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y);
-			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y + bounds.Height);
-			GL.Vertex2 (bounds.X, bounds.Y + bounds.Height);
-			GL.Vertex2 (bounds.X, bounds.Y);
-			GL.End ();
-
-			//draw border
-			GL.Color4 (bordercolor);
-			GL.LineWidth (linewidth);
-			GL.Begin (PrimitiveType.LineLoop);
-			GL.Vertex3 (bounds.X, bounds.Y, 0f);
-			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y, 0f);
-			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, 0f);
-			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, 0f);
-			GL.End ();
-			GL.Enable (EnableCap.Blend);
+//			//draw background square
+//			GL.Color3 (backgroundcolor);
+//			GL.Begin (PrimitiveType.Polygon);
+//			GL.Vertex2 (bounds.X, bounds.Y);
+//			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y);
+//			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y + bounds.Height);
+//			GL.Vertex2 (bounds.X, bounds.Y + bounds.Height);
+//			GL.Vertex2 (bounds.X, bounds.Y);
+//			GL.End ();
+//
+//			//draw border
+//			GL.Color4 (bordercolor);
+//			GL.LineWidth (linewidth);
+//			GL.Begin (PrimitiveType.LineLoop);
+//			GL.Vertex3 (bounds.X, bounds.Y, 0f);
+//			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y, 0f);
+//			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, 0f);
+//			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, 0f);
+//			GL.End ();
+//			GL.Enable (EnableCap.Blend);
 
 			//draw labels
 			contents.ForEach (c => c.draw ());

@@ -18,8 +18,8 @@ namespace MasterBlaster
 		public int shadows = 8;
 		public float rad;
 
-        private float vx;
-        private float vy;
+        public float vx;
+        public float vy;
 
         public float ax;
         public float ay;
@@ -31,7 +31,7 @@ namespace MasterBlaster
 
         private float drag;
 
-        private float thrust;
+        public float thrust;
 
         public float[,] pts;
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
+using System.Drawing.Text;
 // code from http://www.opentk.com/node/1554#comment-10625
 
 namespace MasterBlaster
@@ -21,6 +22,9 @@ namespace MasterBlaster
 		private Size _clientSize;
 		private StringFormatFlags flags;
 
+		public enum Alignment { Left, Center, Right };
+
+		private Alignment alignment;
 		public void Update(int ind, string newText)
 		{
 			if (ind < _lines.Count)
@@ -31,7 +35,7 @@ namespace MasterBlaster
 		}
 
 
-		public TextWriter(Font f, Size ClientSize, Size areaSize, StringFormatFlags flags = StringFormatFlags.NoFontFallback)
+		public TextWriter(Font f, Size ClientSize, Size areaSize, Alignment alignment = Alignment.Left)
 		{
 			_positions = new List<PointF>();
 			_lines = new List<string>();
@@ -41,7 +45,9 @@ namespace MasterBlaster
 			this._clientSize = ClientSize;
 			_textureId = CreateTexture();
 			TextFont = f;
-			this.flags = flags;
+			this.flags = StringFormatFlags.NoFontFallback;
+			this.alignment = alignment;
+
 
 		}
 
@@ -93,9 +99,34 @@ namespace MasterBlaster
 				{
 					gfx.Clear(Color.Black);
 					gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
-					for (int i = 0; i < _lines.Count; i++)
-						gfx.DrawString(_lines[i], TextFont, _colours[i], _positions[i],
-							new StringFormat(flags));
+
+					for (int i = 0; i < _lines.Count; i++) {
+						SizeF drawsize = gfx.MeasureString (_lines [i], TextFont);
+						PointF position;
+						switch (alignment) {
+						case Alignment.Right:
+							{
+								position = new PointF (_positions [i].X - drawsize.Width, _positions [i].Y);
+								gfx.DrawString (_lines [i], TextFont, _colours [i], position,
+									new StringFormat (flags));
+								break;
+							}
+						case Alignment.Center:
+							{
+								position = new PointF (_positions [i].X - (0.5f * drawsize.Width), _positions [i].Y);
+								gfx.DrawString (_lines [i], TextFont, _colours [i], position,
+									new StringFormat (flags));
+								break;
+							}
+						case Alignment.Left:
+							{
+								gfx.DrawString (_lines [i], TextFont, _colours [i], _positions [i],
+									new StringFormat (flags));
+								break;
+							}
+						}
+					}
+
 				}
 
 				System.Drawing.Imaging.BitmapData data = TextBitmap.LockBits(new Rectangle(0, 0, TextBitmap.Width, TextBitmap.Height),

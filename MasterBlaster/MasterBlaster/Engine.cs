@@ -47,7 +47,7 @@ namespace MasterBlaster
 
         public const float BULLET_SIZE = 3.0f;
         public const float BULLET_VEL = 10.0f;
-        public const float BULLET_RANGE = 0.008f;  //this is range squared
+        public const float BULLET_RANGE = 0.08f;  //this is range squared
         public const int BULLET_DAMAGE = 100;
         public const int FIRE_CYCLE = 8;
         public const float SHIP_TURN = 3.0f;
@@ -178,7 +178,7 @@ namespace MasterBlaster
                 float x = ship.pts[0, 0] + ship.position[0];
                 float y = ship.pts[0, 1] + ship.position[1];
 
-                float vel = BULLET_VEL;
+				float vel = BULLET_VEL ;
                 Bullet b = new Bullet(x, y, ship.angle, vel);
                 b.ax = ship.ax + ship.fx;
                 bulletlist.Add(b);

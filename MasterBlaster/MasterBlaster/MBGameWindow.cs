@@ -32,12 +32,12 @@ namespace MasterBlaster
 		}
 		public void setupButtonFont(){
 			buttonWriter = new TextWriter (new Font(families[0], 20),
-				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);
+				new Size (Width, Height), new Size (Width, 50), TextWriter.Alignment.Left);
 
 		}
 		public void setupScoreFont(){
 			scoreWriter = new TextWriter (new Font(families[0], 20),
-				new Size (Width, Height), new Size (Width, 50), StringFormatFlags.DirectionRightToLeft |StringFormatFlags.NoFontFallback);		
+				new Size (Width, Height), new Size (Width, 50),  TextWriter.Alignment.Right);		
 		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (0.1f, 0.1f, 0.5f, 0.5f));
