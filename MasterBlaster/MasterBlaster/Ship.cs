@@ -90,14 +90,6 @@ namespace MasterBlaster
 			GL.End();
 		}
 
-		public float shadowWarp(float position)
-		{
-			if (position > (1.0f + rad))
-				position -= 2.0f;
-			if (position < (-1.0f) - rad)
-				position += 2.0f;
-			return position;
-		}
 
 
         public void engine(float thrust = Engine.SHIP_THRUST)

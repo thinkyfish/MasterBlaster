@@ -38,6 +38,9 @@ namespace MasterBlaster
 			//GL.Disable(EnableCap.Texture2D);	
 
 		}
+		public void Dispose(){
+			this.writer.Dispose ();
+		}
 
 	}
 }

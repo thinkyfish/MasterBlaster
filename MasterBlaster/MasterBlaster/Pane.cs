@@ -8,7 +8,7 @@ namespace MasterBlaster
 {
 	public class Pane
 	{
-		private RectangleF bounds;
+		public RectangleF bounds;
 		private Color bordercolor;
 		private Color backgroundcolor;
 		private float linewidth;
@@ -48,11 +48,15 @@ namespace MasterBlaster
 //			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, 0f);
 //			GL.End ();
 //			GL.Enable (EnableCap.Blend);
-
+//
 			//draw labels
 			contents.ForEach (c => c.draw ());
 
 		}
+		public void Dispose(){
+			contents.ForEach (c => c.Dispose ());
+		}
+
 	}
 }
 

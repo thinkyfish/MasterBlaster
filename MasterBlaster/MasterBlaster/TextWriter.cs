@@ -34,7 +34,9 @@ namespace MasterBlaster
 			}
 		}
 
-
+		public void setClientSize(Size size){
+			_clientSize = size;
+		}
 		public TextWriter(Font f, Size ClientSize, Size areaSize, Alignment alignment = Alignment.Left)
 		{
 			_positions = new List<PointF>();
@@ -164,7 +166,7 @@ namespace MasterBlaster
 			GL.Disable(EnableCap.Blend);
 			GL.Disable(EnableCap.Texture2D);
 
-			GL.MatrixMode(MatrixMode.Modelview);
+			//GL.MatrixMode(MatrixMode.Modelview);
 			GL.PopMatrix();
 		}
 	}

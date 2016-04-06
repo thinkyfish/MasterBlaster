@@ -74,7 +74,7 @@ namespace MasterBlaster
         public const int NUMSCORES = 8;
         public const string SCOREFILE = "scores.dat";
         public const string SCOREFILEBAK = "scores.dat~";
-		public static float ViewX = 2.0f;
+		public static float ViewX = 1.0f;
 		
 		public static float ViewY = 1.0f;
 

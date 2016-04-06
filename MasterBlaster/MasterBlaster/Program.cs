@@ -49,9 +49,17 @@ namespace MasterBlaster
                     //game.Height = max;
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
-					//game.scoreWriter.Dispose();
+					game.scoreWriter.Dispose();
+					game.buttonWriter.Dispose();
+					game.menuPane.Dispose();
+
+					game.setupScoreFont();
+					game.setupButtonFont();
+					game.paneSetup();
 					//game.setupScoreFont();
 					//game.scoreWriter.UpdateText();
+					game.scoreWriter.setClientSize(new Size(game.Width, game.Height));
+					game.buttonWriter.setClientSize(new Size(game.Width, game.Height));
                     //GL.Viewport(0, 0, game.Width, game.Height);
                 };
                 game.KeyDown += (sender, e) =>
@@ -151,15 +159,16 @@ namespace MasterBlaster
 					//Label score = new Label(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f));
 					//score.draw();
 					//if(engine.scorechanged){
+					GL.PushMatrix();
 					game.scoreWriter.Clear();
 
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
-						new PointF(game.Width - ( (game.Width - 600)), 20.0f),
+						new PointF(game.Width - 20f, 20.0f),
 							new SolidBrush(Color.White));
 
 					game.scoreWriter.Draw();
 					//GL.Enable(EnableCap.Texture2D);
-
+					GL.PopMatrix();
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
 					GL.Disable(EnableCap.Blend);
 					//QFont.Begin();
