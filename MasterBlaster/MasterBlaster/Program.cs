@@ -31,7 +31,7 @@ namespace MasterBlaster
                     game.VSync = VSyncMode.On;
                     //game.WindowBorder = WindowBorder.Hidden;
 					//game.fontSetup();
-					game.textSetup();
+					game.LoadFonts();
 					game.paneSetup();
 
                 };
@@ -53,13 +53,13 @@ namespace MasterBlaster
 					game.buttonWriter.Dispose();
 					game.menuPane.Dispose();
 
-					game.setupScoreFont();
-					game.setupButtonFont();
+					//game.setupFonts();
 					game.paneSetup();
 					//game.setupScoreFont();
 					//game.scoreWriter.UpdateText();
 					game.scoreWriter.setClientSize(new Size(game.Width, game.Height));
 					game.buttonWriter.setClientSize(new Size(game.Width, game.Height));
+					game.menuWriter.setClientSize(new Size(game.Width, game.Height));
                     //GL.Viewport(0, 0, game.Width, game.Height);
                 };
                 game.KeyDown += (sender, e) =>
@@ -140,13 +140,6 @@ namespace MasterBlaster
 					//GL.Enable(EnableCap.Blend);
 					//GL.BlendFunc(
 
-                    //GL.Begin(PrimitiveType.Triangles);
-                    //GL.Color3(Color.MidnightBlue);
-                    //GL.Vertex2(-1.0f, 1.0f);
-                    //GL.Color3(Color.SpringGreen);
-                    //GL.Vertex2(0.0f, -1.0f);
-                    //GL.Color3(Color.Ivory);
-                    //GL.Vertex2(1.0f, 1.0f);
 
                     //GL.End();
 					GL.Disable(EnableCap.Blend);
@@ -156,7 +149,7 @@ namespace MasterBlaster
 					//GL.ClearDepth(1.0f);
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
 					//GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
-					GL.BlendFunc(BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrc1Alpha);
+					GL.BlendFunc(BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrcAlpha);
 					//GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
 					GL.Enable(EnableCap.Blend);
 					//QFont.Begin();

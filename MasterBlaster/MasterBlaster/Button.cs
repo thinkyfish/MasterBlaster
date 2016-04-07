@@ -11,7 +11,7 @@ namespace MasterBlaster
 		private RectangleF bounds;
 		public Color bordercolor = Color.White;
 		public float linewidth = 1.0f;
-		public Button (string text, TextWriter writer, Vector2 location, float bordersize) : base (text, writer, location)
+		public Button (string text, TextWriter writer, Vector2 location, float bordersize = 1.0f) : base (text, writer, location)
 		{
 			//SizeF textsize = font.Measure (text);
 			//bounds = new RectangleF (location.X - bordersize, location.Y - bordersize,

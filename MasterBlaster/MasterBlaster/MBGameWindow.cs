@@ -21,30 +21,31 @@ namespace MasterBlaster
 		public Pane menuPane;
 		public TextWriter scoreWriter;
 		public TextWriter buttonWriter;
+		public TextWriter menuWriter;
 		private PrivateFontCollection pfc;
 		private FontFamily[] families;
-		public void textSetup(){
+		public void LoadFonts(){
 			pfc = new PrivateFontCollection ();
 			pfc.AddFontFile ("Fonts/Anonymous Pro.ttf");
 			families = pfc.Families;
 			//this.setupButtonFont ();
-			this.setupScoreFont ();
+			this.setupFonts ();
 
 		}
-		public void setupButtonFont(){
-			buttonWriter = new TextWriter (new Font(families[0], 30),
+		public void setupFonts(){
+			buttonWriter = new TextWriter (new Font(families[0], 20),
 				new Size (Width, Height), new Size(Width,Height), TextWriter.Alignment.Center);
-
-		}
-		public void setupScoreFont(){
 			scoreWriter = new TextWriter (new Font(families[0], 20),
-				new Size (Width, Height), new Size (Width,Height),  TextWriter.Alignment.Right);		
+				new Size (Width, Height), new Size (Width,Height),  TextWriter.Alignment.Right);
+			menuWriter = new TextWriter (new Font(families[0], 30),
+				new Size (Width, Height), new Size(Width,Height), TextWriter.Alignment.Center);
 		}
 		public void paneSetup(){
-			menuPane = new Pane (new RectangleF (0.1f, 0.1f, 0.5f, 0.5f));
+			menuPane = new Pane (new RectangleF (-0.75f, -0.75f, 1.5f, 1.5f));
 			//GameToView(0f, 0.5f)
-			this.setupButtonFont ();
-			menuPane.addLabel (new Button ("testbutton", buttonWriter,GameToView (0f,0.5f), 10f));
+			this.setupFonts ();
+			menuPane.addLabel (new Label ("MasterBlaster", menuWriter,GameToView (0f,0.6f)));
+			menuPane.addLabel (new Button ("Start New Game", buttonWriter, GameToView (0f, 0.4f)));
 		}
 		public Vector2 GameToView(float x, float y){
 			return new Vector2 ((Width / (2.0f * Engine.ViewX)) * (x + Engine.ViewX),
