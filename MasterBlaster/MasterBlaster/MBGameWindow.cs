@@ -32,7 +32,7 @@ namespace MasterBlaster
 
 		}
 		public void setupButtonFont(){
-			buttonWriter = new TextWriter (new Font(families[0], 20),
+			buttonWriter = new TextWriter (new Font(families[0], 30),
 				new Size (Width, Height), new Size(Width,Height), TextWriter.Alignment.Center);
 
 		}

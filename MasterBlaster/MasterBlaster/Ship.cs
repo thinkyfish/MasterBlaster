@@ -74,10 +74,24 @@ namespace MasterBlaster
 				
         }
 		public void drawshipimage(float xpos, float ypos){
+
+			//draw black background
+			GL.Color3(Color.Black);
+			GL.Begin(PrimitiveType.TriangleFan);
+			GL.Vertex2 (xpos, ypos);
+			for (int i = 0; i < 4; i++)
+			{
+				GL.Vertex2(pts[i, 0] + xpos, pts[i, 1] + ypos);
+			}
+
+			GL.Vertex2(pts[0, 0] + xpos, pts[0, 1] + ypos);
+			GL.End();
+
+			//draw the edge lines
 			GL.LineWidth(1.0f);
 			GL.Color3(color);
 
-			//draw the edge lines
+
 			GL.Begin(PrimitiveType.LineStrip);
 			for (int i = 0; i < 4; i++)
 				GL.Vertex2(xpos + pts[i, 0],

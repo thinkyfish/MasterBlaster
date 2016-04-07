@@ -26,6 +26,8 @@ namespace MasterBlaster
 		public virtual void draw(){
 			writer.Clear ();
 			writer.AddLine (text, location, brush);
+			GL.Disable(EnableCap.DepthTest);
+			//GL.ClearDepth(1.0f);
 			writer.Draw ();
 //				GL.ClearDepth(0.0);
 //				GL.Disable(EnableCap.Texture2D);

@@ -13,6 +13,7 @@ namespace MasterBlaster
 		private Color backgroundcolor;
 		private float linewidth;
 		private List<Label> contents;
+		private float Depth = 0.5f;
 		public Pane (RectangleF bounds, float linewidth = 1.0f)
 		{
 			this.bordercolor = Color.White;
@@ -27,29 +28,37 @@ namespace MasterBlaster
 		public void draw(){
 	
 			//GL.Disable (EnableCap.Texture2D);
+			//GL.ClearDepth (1.0f);
+			//draw background square
+			//GL.Disable (EnableCap.Blend);
+			GL.Color3 (backgroundcolor);
+			GL.Begin (PrimitiveType.Polygon);
+			GL.Vertex3 (bounds.X, bounds.Y, Depth);
+			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y, Depth);
+			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, Depth);
+			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, Depth);
+			GL.Vertex3 (bounds.X, bounds.Y, Depth);
+			GL.End ();
 
-//			//draw background square
-//			GL.Color3 (backgroundcolor);
-//			GL.Begin (PrimitiveType.Polygon);
-//			GL.Vertex2 (bounds.X, bounds.Y);
-//			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y);
-//			GL.Vertex2 (bounds.X + bounds.Width, bounds.Y + bounds.Height);
-//			GL.Vertex2 (bounds.X, bounds.Y + bounds.Height);
-//			GL.Vertex2 (bounds.X, bounds.Y);
-//			GL.End ();
-//
-//			//draw border
-//			GL.Color4 (bordercolor);
-//			GL.LineWidth (linewidth);
-//			GL.Begin (PrimitiveType.LineLoop);
-//			GL.Vertex3 (bounds.X, bounds.Y, 0f);
-//			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y, 0f);
-//			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, 0f);
-//			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, 0f);
-//			GL.End ();
-//			GL.Enable (EnableCap.Blend);
-//
+			//draw border
+			GL.Color4 (bordercolor);
+			GL.LineWidth (linewidth);
+			GL.Begin (PrimitiveType.LineLoop);
+			GL.Vertex3 (bounds.X, bounds.Y, Depth);
+			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y, Depth);
+			GL.Vertex3 (bounds.X + bounds.Width, bounds.Y + bounds.Height, Depth);
+			GL.Vertex3 (bounds.X, bounds.Y + bounds.Height, Depth);
+			GL.End ();
+			//GL.ClearDepth (0.7);
+			//GL.Clear(ClearBufferMask.DepthBufferBit);
+
+			//GL.Enable (EnableCap.Blend);
+			//;
 			//draw labels
+			//contents.ForEach (c => c.draw ());
+
+		}
+		public void DrawText(){
 			contents.ForEach (c => c.draw ());
 
 		}

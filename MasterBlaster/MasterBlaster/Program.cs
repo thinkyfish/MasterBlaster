@@ -128,12 +128,14 @@ namespace MasterBlaster
 					if (game.Width < 600)
 						game.Width = 600;
 					// render graphics
+					GL.ClearDepth(1.0f);
 					GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
                     GL.MatrixMode(MatrixMode.Projection);
                     GL.LoadIdentity();
 					GL.Viewport(0, 0, game.Width, game.Height);
 					GL.Ortho(-Engine.ViewX, Engine.ViewX, -Engine.ViewY, Engine.ViewY, -1.0, 1.0);
+					GL.Disable(EnableCap.DepthTest);
 					//GL.Disable( EnableCap.Blend );
 					//GL.Enable(EnableCap.Blend);
 					//GL.BlendFunc(
@@ -147,35 +149,39 @@ namespace MasterBlaster
                     //GL.Vertex2(1.0f, 1.0f);
 
                     //GL.End();
-
+					GL.Disable(EnableCap.Blend);
 					engine.draw();
+					game.menuPane.draw();
 					/////
-					GL.ClearDepth(1.0f);
-					GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+					//GL.ClearDepth(1.0f);
+					//GL.Clear(ClearBufferMask.DepthBufferBit);
+					//GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+					GL.BlendFunc(BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrc1Alpha);
+					//GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
 					GL.Enable(EnableCap.Blend);
 					//QFont.Begin();
 					//string text = Convert.ToString(engine.score);
 					//SizeF len = game.scoreFont.Measure(text);
 					//Label score = new Label(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f));
 					//score.draw();
-					//if(engine.scorechanged){
-					GL.PushMatrix();
+					if(engine.scorechanged){
+					//GL.PushMatrix();
 					game.scoreWriter.Clear();
 
 					game.scoreWriter.AddLine(Convert.ToString(engine.score),
 						new PointF(game.Width - 20f, 20.0f),
-							new SolidBrush(Color.White));
+							new SolidBrush(Color.White));}
 
 					game.scoreWriter.Draw();
 					//GL.Enable(EnableCap.Texture2D);
-					GL.PopMatrix();
+					//GL.PopMatrix();
 					//GL.Clear(ClearBufferMask.DepthBufferBit);
-					GL.Disable(EnableCap.Blend);
+					//GL.Disable(EnableCap.Blend);
 					//QFont.Begin();
 //					game.buttonWriter.Clear();
 //					game.buttonWriter.AddLine("test", new PointF(100.0f,20.0f), new SolidBrush(Color.White));
 //					game.buttonWriter.Draw();
-					game.menuPane.draw();
+					game.menuPane.DrawText();
 					//GL.Disable(EnableCap.Texture2D);
 				
 					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);

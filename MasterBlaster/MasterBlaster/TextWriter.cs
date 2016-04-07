@@ -21,7 +21,7 @@ namespace MasterBlaster
 		private int _textureId;
 		private Size _clientSize;
 		private StringFormatFlags flags;
-
+		private float Depth = 1.0f;
 		public enum Alignment { Left, Center, Right };
 
 		private Alignment alignment;
@@ -99,7 +99,7 @@ namespace MasterBlaster
 			{
 				using (Graphics gfx = Graphics.FromImage(TextBitmap))
 				{
-					gfx.Clear(Color.Black);
+					gfx.Clear(Color.Transparent);
 					gfx.TextRenderingHint = System.Drawing.Text.TextRenderingHint.ClearTypeGridFit;
 
 					for (int i = 0; i < _lines.Count; i++) {
@@ -140,34 +140,39 @@ namespace MasterBlaster
 
 		public void Draw()
 		{
-			GL.PushMatrix();
-			GL.LoadIdentity();
+			//GL.PushMatrix();
+			//GL.LoadIdentity();
 
 			Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0, _clientSize.Width, _clientSize.Height, 0, -1, 1);
 			GL.MatrixMode(MatrixMode.Projection);
 
 			GL.PushMatrix();//
 			GL.LoadMatrix(ref ortho_projection);
-
+			//GL.Disable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.Blend);
-			GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
 			GL.Enable(EnableCap.Texture2D);
 			GL.BindTexture(TextureTarget.Texture2D, _textureId);
-
+			//GL.Enable(EnableCap.DepthTest);
+			//GL.Clear(ClearBufferMask.DepthBufferBit);
 
 			GL.Begin(PrimitiveType.Quads);
-			GL.TexCoord2(0, 0); GL.Vertex2(0, 0);
-			GL.TexCoord2(1, 0); GL.Vertex2(TextBitmap.Width, 0);
-			GL.TexCoord2(1, 1); GL.Vertex2(TextBitmap.Width, TextBitmap.Height);
-			GL.TexCoord2(0, 1); GL.Vertex2(0, TextBitmap.Height);
+			GL.TexCoord2(0, 0); GL.Vertex3(0, 0, Depth);
+			GL.TexCoord2(1, 0); GL.Vertex3(TextBitmap.Width, 0, Depth);
+			GL.TexCoord2(1, 1); GL.Vertex3(TextBitmap.Width, TextBitmap.Height, Depth);
+			GL.TexCoord2(0, 1); GL.Vertex3(0, TextBitmap.Height, Depth);
+			//GL.Disable(EnableCap.DepthTest);
 			GL.End();
+			//GL.ClearDepth(1.0f);
+			//GL.ClearDepth(0.5f);
+			//GL.Clear(ClearBufferMask.DepthBufferBit);
 			GL.PopMatrix();
 
-			GL.Disable(EnableCap.Blend);
+			//GL.Disable(EnableCap.Blend);
 			GL.Disable(EnableCap.Texture2D);
-
+			//GL.Disable (EnableCap.DepthTest);
 			//GL.MatrixMode(MatrixMode.Modelview);
-			GL.PopMatrix();
+			//GL.PopMatrix();
 		}
 	}
 }
