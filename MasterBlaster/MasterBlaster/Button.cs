@@ -18,6 +18,7 @@ namespace MasterBlaster
 //								   textsize.Width + 2 * bordersize, textsize.Height + 2 * bordersize);
 
 		}
+
 		public override void draw(){
 
 //			GL.Disable(EnableCap.Texture2D);
