@@ -184,6 +184,9 @@ namespace MasterBlaster
                 bulletlist.Add(b);
 				bulletcycle = FIRE_CYCLE;
 				score -= 1;
+				if (score < 0)
+					score = 0;
+				scorechanged = true;
 				//firing = false;
             }
         }

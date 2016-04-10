@@ -13,10 +13,7 @@ namespace MasterBlaster
 {
 	class Program
 	{
-		//private BulletList bl = new BulletList();
-		/// <summary>
-		/// 
-		/// </summary>
+
 		[STAThread]
 		public static void Main ()
 		{
@@ -32,7 +29,7 @@ namespace MasterBlaster
 					//game.fontSetup();
 					game.LoadFonts ();
 					game.paneSetup ();
-					game.Mode = MBGameWindow.WindowMode.Menu;
+					game.Mode = WindowMode.Menu;
 				};
 
 				game.Resize += (sender, e) => {
@@ -78,10 +75,10 @@ namespace MasterBlaster
 						engine.startTurning (-1.0f);
 						break;
 					case Key.M:
-						game.Mode = MBGameWindow.WindowMode.Menu;
+						game.Mode = WindowMode.Menu;
 						break;
 					case Key.G:
-						game.Mode = MBGameWindow.WindowMode.Game;
+						game.Mode = WindowMode.Game;
 						break;
 					default:
 						break;
@@ -96,11 +93,20 @@ namespace MasterBlaster
 					case Key.W:
 						engine.stopThrusting ();
 						break;
+					case Key.S:
+						engine.stopThrusting ();
+						break;
 					case Key.A:
 						engine.stopTurning ();
 						break;
 					case Key.D:
 						engine.stopTurning ();
+						break;
+					case Key.Escape:
+						game.Exit();
+						break;
+					case Key.F:
+						game.WindowState = WindowState.Fullscreen;
 						break;
 					default:
 						break;
@@ -108,11 +114,7 @@ namespace MasterBlaster
 
 				};
 				game.UpdateFrame += (sender, e) => {
-
-					// add game logic, input handling
-					if (game.Keyboard [Key.Escape]) {
-						game.Exit ();
-					}
+				
 					engine.nextframe (Engine.DT);
 					//b.nextframe();
 
@@ -153,12 +155,12 @@ namespace MasterBlaster
 
 
 
-					if (game.Mode == MBGameWindow.WindowMode.Game) {
+					if (game.Mode == WindowMode.Game) {
 					
 						engine.draw ();
 						game.scoreWriter.Draw ();
 					}
-					if (game.Mode == MBGameWindow.WindowMode.Menu) {
+					if (game.Mode == WindowMode.Menu) {
 
 						engine.draw();
 

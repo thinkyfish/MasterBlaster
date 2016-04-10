@@ -13,6 +13,7 @@ using System.Drawing.Text;
 
 namespace MasterBlaster
 {
+	public enum WindowMode {Menu, Game, Settings, NewGame};
     //private Engine engine;
     class MBGameWindow : GameWindow
     {
@@ -24,7 +25,7 @@ namespace MasterBlaster
 		public TextWriter menuWriter;
 		private PrivateFontCollection pfc;
 		private FontFamily[] families;
-		public enum WindowMode {Menu, Game, Settings, NewGame};
+
 		public WindowMode Mode;
 		public void LoadFonts(){
 			pfc = new PrivateFontCollection ();

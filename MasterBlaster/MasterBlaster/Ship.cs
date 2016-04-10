@@ -9,7 +9,7 @@ using OpenTK.Graphics.OpenGL;
 
 namespace MasterBlaster
 {
-    class Ship
+    public class Ship
     {
         public float angle;
 

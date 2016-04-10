@@ -61,6 +61,7 @@
     <Compile Include="Label.cs" />
     <Compile Include="Pane.cs" />
     <Compile Include="TextWriter.cs" />
+    <Compile Include="Selector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
