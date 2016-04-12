@@ -5,7 +5,7 @@ using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Imaging;
 using System.Drawing.Text;
-// code from http://www.opentk.com/node/1554#comment-10625
+// code originally from http://www.opentk.com/node/1554#comment-10625
 
 namespace MasterBlaster
 {

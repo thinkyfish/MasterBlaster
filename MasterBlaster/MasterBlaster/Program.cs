@@ -106,7 +106,11 @@ namespace MasterBlaster
 						game.Exit();
 						break;
 					case Key.F:
-						game.WindowState = WindowState.Fullscreen;
+						if(game.WindowState == WindowState.Normal){
+							game.WindowState = WindowState.Fullscreen;
+						} else {
+							game.WindowState = WindowState.Normal;
+						}
 						break;
 					default:
 						break;
@@ -162,7 +166,7 @@ namespace MasterBlaster
 					}
 					if (game.Mode == WindowMode.Menu) {
 
-						engine.draw();
+
 
 						game.menuPane.draw ();
 						/////
@@ -189,6 +193,7 @@ namespace MasterBlaster
 //					game.buttonWriter.AddLine("test", new PointF(100.0f,20.0f), new SolidBrush(Color.White));
 //					game.buttonWriter.Draw();
 						game.menuPane.DrawText ();
+						engine.draw();
 					}
 					//GL.Disable(EnableCap.Texture2D);
 				

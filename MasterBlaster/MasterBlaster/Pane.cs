@@ -13,17 +13,33 @@ namespace MasterBlaster
 		private Color backgroundcolor;
 		private float linewidth;
 		private List<Label> contents;
+		private List<Button> buttons;
 		private float Depth = 0.5f;
+		private Selector selector;
+		private float nextY;
+		private float layoutoffset = 0.2f;
+
+
 		public Pane (RectangleF bounds, float linewidth = 1.0f)
 		{
 			this.bordercolor = Color.White;
 			this.backgroundcolor = Color.Black;
 			this.bounds = bounds;
 			this.contents = new List<Label> ();
+			this.buttons = new List<Button> ();
 			this.linewidth = linewidth;
+			this.selector = new Selector (0f, 0.5f);
+			this.nextY = 0.6f;
 		}
 		public void addLabel(Label l){
+			//l.location.Y = nextY;
+			//nextY -= layoutoffset;
 			contents.Add (l);
+		}
+		public void addButton(Button b){
+			//b.location.Y = nextY;
+			//nextY -= layoutoffset;
+			buttons.Add (b);
 		}
 		public void draw(){
 	
@@ -56,14 +72,17 @@ namespace MasterBlaster
 			//;
 			//draw labels
 			//contents.ForEach (c => c.draw ());
+			selector.draw ();
 
 		}
 		public void DrawText(){
 			contents.ForEach (c => c.draw ());
+			buttons.ForEach (b => b.draw ());
 
 		}
 		public void Dispose(){
 			contents.ForEach (c => c.Dispose ());
+			buttons.ForEach (b => b.Dispose ());
 		}
 
 	}

@@ -48,7 +48,7 @@ namespace MasterBlaster
 			//GameToView(0f, 0.5f)
 			this.setupFonts ();
 			menuPane.addLabel (new Label ("MasterBlaster", menuWriter,GameToView (0f,0.6f)));
-			menuPane.addLabel (new Button ("Start New Game", buttonWriter, GameToView (0f, 0.4f)));
+			menuPane.addButton (new Button ("Start New Game", buttonWriter, GameToView (0f, 0.4f)));
 		}
 		public Vector2 GameToView(float x, float y){
 			return new Vector2 ((Width / (2.0f * Engine.ViewX)) * (x + Engine.ViewX),

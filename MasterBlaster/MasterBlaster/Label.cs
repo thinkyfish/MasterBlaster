@@ -11,7 +11,7 @@ namespace MasterBlaster
 	{
 		private string text;
 		private TextWriter writer;
-		private PointF location;
+		public PointF location;
 		private SizeF size;
 		private Brush brush;
 		public Label (string text, TextWriter writer, Vector2 location)

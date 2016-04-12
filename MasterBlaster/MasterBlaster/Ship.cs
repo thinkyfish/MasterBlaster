@@ -56,7 +56,7 @@ namespace MasterBlaster
 			this.shadowpos = new float[shadows, 2];
         }
 
-        public void draw()
+        public virtual void draw()
         {
 			drawshipimage (position[0], position[1]);
 			//loop over the possible intruding edges, checking if any are visible and if so, draw them.
