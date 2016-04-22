@@ -15,6 +15,7 @@ namespace MasterBlaster
 		private List<Label> contents;
 		private List<Button> buttons;
 		private float Depth = 0.5f;
+		public int selected = 0;
 		private Selector selector;
 		private float nextY;
 		private float layoutoffset = 0.2f;
@@ -28,7 +29,7 @@ namespace MasterBlaster
 			this.contents = new List<Label> ();
 			this.buttons = new List<Button> ();
 			this.linewidth = linewidth;
-			this.selector = new Selector (0f, 0.5f);
+			this.selector = new Selector (-0.2f, 0.0f);
 			this.nextY = 0.6f;
 		}
 		public void addLabel(Label l){
@@ -72,7 +73,7 @@ namespace MasterBlaster
 			//;
 			//draw labels
 			//contents.ForEach (c => c.draw ());
-			selector.draw ();
+			selector.draw (new PointF(0.0f, 0.0f));
 
 		}
 		public void DrawText(){

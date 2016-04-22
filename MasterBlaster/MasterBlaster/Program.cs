@@ -29,7 +29,7 @@ namespace MasterBlaster
 					//game.fontSetup();
 					game.LoadFonts ();
 					game.paneSetup ();
-					game.Mode = WindowMode.Menu;
+					game.Mode = WindowMode.Game;
 				};
 
 				game.Resize += (sender, e) => {
