@@ -51,6 +51,5 @@ namespace MasterBlaster
 			return new Vector2 ((Width / (2.0f * Engine.ViewX)) * (x + Engine.ViewX),
 				(- Height / (2.0f * Engine.ViewY)) * ( y - Engine.ViewY));
 		}
-
     }	
 }

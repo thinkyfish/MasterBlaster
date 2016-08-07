@@ -32,16 +32,19 @@ namespace MasterBlaster
 			//this.selector = new Selector (-0.2f, 0.0f);
 			this.nextY = 0.6f;
 		}
+
 		public void addLabel(Label l){
 			//l.location.Y = nextY;
 			//nextY -= layoutoffset;
 			contents.Add (l);
 		}
+
 		public void addButton(Button b){
 			//b.location.Y = nextY;
 			//nextY -= layoutoffset;
 			buttons.Add (b);
 		}
+
 		public void draw(){
 	
 			//GL.Disable (EnableCap.Texture2D);
@@ -76,16 +79,17 @@ namespace MasterBlaster
 			//selector.draw (new PointF(0.0f, 0.0f));
 
 		}
+
 		public void DrawText(){
 			contents.ForEach (c => c.draw ());
 			buttons.ForEach (b => b.draw ());
 
 		}
+
 		public void Dispose(){
 			contents.ForEach (c => c.Dispose ());
 			buttons.ForEach (b => b.Dispose ());
 		}
-
 	}
 }
 

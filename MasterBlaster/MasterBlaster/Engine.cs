@@ -26,6 +26,7 @@ namespace MasterBlaster
         public int startinglevel = 8;
 		public int score;
 		public bool scorechanged = true;
+
         //This is the rng for the whole game
         public static Random rand = new Random();
 
@@ -135,6 +136,7 @@ namespace MasterBlaster
             this.startinglevel = level;
             this.nextlevel(level);
         }
+
         private bool cyclebullet()
         {
             bool fire = false;
@@ -146,6 +148,7 @@ namespace MasterBlaster
             
             return fire;
         }
+
         public void startfiring()
         {
             //reset bullet cycle
@@ -153,16 +156,13 @@ namespace MasterBlaster
             //    bulletcycle = 0;
             firing = true;
 			fire_bullet ();
-
         }
+
         public void stopfiring()
         {
-            //bulletcycle = 0;
-
-				
-				firing = false;
-		
+			firing = false;
         }
+
         public void fire_bullet()
         {
 			if (cyclebullet() && firing)
@@ -182,24 +182,29 @@ namespace MasterBlaster
 				//firing = false;
             }
         }
+
         public void startThrusting(float direction = 1.0f)
         {
             thrusting = true;
             ship.engine(direction * SHIP_THRUST);
         }
+
         public void stopThrusting()
         {
             thrusting = false;
             ship.engine(0);
         }
+
         public void startTurning(float direction)
         {
             turning = direction;
         }
+
         public void stopTurning()
         {
             turning = 0.0f;
         }
+
         public void nextframe(float dt = Engine.DT)
         {
             //fire bullets if needed
@@ -272,13 +277,7 @@ namespace MasterBlaster
                                 }
 
                             }
-
-
-
-
                         }
-
-
                     }
                 }
 
@@ -320,6 +319,7 @@ namespace MasterBlaster
             if (ship != null) ship.nextframe(dt);
 
         }
+
         public void draw()
         {
             bulletlist.ForEach(b => b.draw());
@@ -327,10 +327,12 @@ namespace MasterBlaster
             explosionlist.ForEach(e => e.draw());
             if (ship != null) ship.draw();
         }
+
         public void addBullet(Bullet b)
         {
             bulletlist.Add(b);
         }
+
         public void newMeteor(int size = METEOR_PTS)
         {
             float mx = ship.position[0];
@@ -348,10 +350,10 @@ namespace MasterBlaster
             }
             meteorlist.Add(new Meteor(size, mx, my));
         }
+
         public void addShip(float x = 0.0f, float y = 0.0f)
         {
             ship = new Ship(x, y);
         }
-
     }
 }

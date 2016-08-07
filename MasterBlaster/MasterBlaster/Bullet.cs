@@ -73,13 +73,9 @@ namespace MasterBlaster
             dist += dr;
 
             //if the bullet has traveled too far, kill it.
-            if (dist > Engine.BULLET_RANGE)
-            {
-                this.health = 0;
-            }
-
-
+			if (dist > Engine.BULLET_RANGE) {
+				this.health = 0;
+			}
         }
-
     }
 }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   

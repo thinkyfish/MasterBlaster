@@ -65,9 +65,6 @@ namespace MasterBlaster
 
             shadowpos[7, 0] = position[0] + xsize;
             shadowpos[7, 1] = position[1] + ysize;
-
-
-
         }
   
         // use barycentric coordinates to check if P is inside triangle A,B,C.
@@ -143,8 +140,7 @@ namespace MasterBlaster
             // no collision found
             return false;
         }
-
-
+			
 		public float shadowWarp(float position, float bound)
         {
             if (position > (bound + maxrad))
@@ -274,8 +270,7 @@ namespace MasterBlaster
 
 
         }
-
-
+			
         public Meteor(int size = Engine.METEOR_PTS, float x = 0.0f, float y = 0.0f, float b_angle = 0f)
         {
             this.pts = new float[size, 2];
@@ -316,17 +311,12 @@ namespace MasterBlaster
                 pts[i - 1, 0] = p_x;
                 pts[i - 1, 1] = p_y;
             }
-
-
-
-
+				
             //give the meteor a random starting blast angle
             if (b_angle == 0)
                 b_angle = Engine.rand.Next() % 360;
 
             this.blast(b_angle);
-
         }
-
     }
 }

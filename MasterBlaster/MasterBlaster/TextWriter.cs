@@ -37,6 +37,7 @@ namespace MasterBlaster
 		public void setClientSize(Size size){
 			_clientSize = size;
 		}
+
 		public TextWriter(Font f, Size ClientSize, Size areaSize, Alignment alignment = Alignment.Left)
 		{
 			_positions = new List<PointF>();

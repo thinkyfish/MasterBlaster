@@ -70,9 +70,9 @@ namespace MasterBlaster
 					drawshipimage(shadowpos[i, 0], shadowpos[i, 1]);
 					//}
 				}
-			}
-				
+			}	
         }
+
 		public void drawshipimage(float xpos, float ypos){
 
 			//draw black background
@@ -103,8 +103,6 @@ namespace MasterBlaster
 
 			GL.End();
 		}
-
-
 
         public void engine(float thrust = Engine.SHIP_THRUST)
         {
@@ -143,7 +141,6 @@ namespace MasterBlaster
 			position[1] = Engine.glrange(position[1] + dsy, Engine.ViewY);
 			setshadow (position);
 			setAngle (angle);
-            
         }
 
 		public void setAngle(float angle){
@@ -162,11 +159,8 @@ namespace MasterBlaster
 			pts[2, 1] = 0.0f;
 			pts[3, 0] = rad * (float)Math.Cos(angle3 * Engine.PI / 180.0f);
 			pts[3, 1] = rad * (float)Math.Sin(angle3 * Engine.PI / 180.0f);
-
-
 		}
-
-
+			
 		//set the shadow position array to all possible corresponding positions outside the field of view.
 		public void setshadow(float[] position)
 		{
@@ -196,11 +190,6 @@ namespace MasterBlaster
 
 			shadowpos[7, 0] = position[0] + xsize;
 			shadowpos[7, 1] = position[1] + ysize;
-
-
-
 		}
-
-
     }
 }
