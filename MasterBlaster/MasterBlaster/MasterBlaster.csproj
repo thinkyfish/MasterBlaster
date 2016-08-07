@@ -11,7 +11,7 @@
     <AssemblyName>MasterBlaster</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -32,7 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
@@ -42,10 +44,8 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
     <Reference Include="OpenTK">
-      <HintPath>..\..\..\..\shared\OpenTK.dll</HintPath>
-    </Reference>
-    <Reference Include="QuickFont">
-      <HintPath>..\Dependencies\QuickFont.dll</HintPath>
+      <HintPath>..\Dependencies\OpenTK.dll</HintPath>
+      <Private>False</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -61,7 +61,6 @@
     <Compile Include="Label.cs" />
     <Compile Include="Pane.cs" />
     <Compile Include="TextWriter.cs" />
-    <Compile Include="Selector.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
