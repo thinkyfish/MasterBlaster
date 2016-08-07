@@ -19,14 +19,10 @@ namespace MasterBlaster
 		{
 			Engine engine = new Engine (8);
 
-
-			//Bullet b = new Bullet(100.0f, 100.0f, 35f);
 			using (var game = new MBGameWindow ()) {
 				game.Load += (sender, e) => {
 					// setup settings, load textures, sounds
 					game.VSync = VSyncMode.On;
-					//game.WindowBorder = WindowBorder.Hidden;
-					//game.fontSetup();
 					game.LoadFonts ();
 					game.paneSetup ();
 					game.Mode = WindowMode.Game;
@@ -34,28 +30,26 @@ namespace MasterBlaster
 
 				game.Resize += (sender, e) => {
                     
-					//int max = game.Width;
+
 					if (game.Height < 600)
 						game.Height = 600;
 					if (game.Width < 600)
 						game.Width = 600;
-					//    max = game.Height;
-					//game.Width = max;
-					//game.Height = max;
+
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
 					game.scoreWriter.Dispose ();
 					game.buttonWriter.Dispose ();
 					game.menuPane.Dispose ();
 
-					//game.setupFonts();
+
 					game.paneSetup ();
-					//game.setupScoreFont();
-					//game.scoreWriter.UpdateText();
+
 					game.scoreWriter.setClientSize (new Size (game.Width, game.Height));
 					game.buttonWriter.setClientSize (new Size (game.Width, game.Height));
 					game.menuWriter.setClientSize (new Size (game.Width, game.Height));
 					//GL.Viewport(0, 0, game.Width, game.Height);
+
 				};
 				game.KeyDown += (sender, e) => {
 					switch (e.Key) {
@@ -139,13 +133,11 @@ namespace MasterBlaster
 					GL.Viewport (0, 0, game.Width, game.Height);
 					GL.Ortho (-Engine.ViewX, Engine.ViewX, -Engine.ViewY, Engine.ViewY, -1.0, 1.0);
 					GL.Disable (EnableCap.DepthTest);
-					//GL.Disable( EnableCap.Blend );
-					//GL.Enable(EnableCap.Blend);
-					//GL.BlendFunc(
+
 
 
 					if (engine.scorechanged) {
-						//GL.PushMatrix();
+
 						game.scoreWriter.Clear ();
 
 						game.scoreWriter.AddLine (Convert.ToString (engine.score),
@@ -154,9 +146,8 @@ namespace MasterBlaster
 					}
 
 
-					//GL.End();
-					GL.Disable (EnableCap.Blend);
 
+					GL.Disable (EnableCap.Blend);
 
 
 					if (game.Mode == WindowMode.Game) {
@@ -166,38 +157,14 @@ namespace MasterBlaster
 					}
 					if (game.Mode == WindowMode.Menu) {
 
-
-
 						game.menuPane.draw ();
-						/////
-						//GL.ClearDepth(1.0f);
-						//GL.Clear(ClearBufferMask.DepthBufferBit);
-						//GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrc1Alpha);
+
 						GL.BlendFunc (BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrcAlpha);
-						//GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.DstColor);
 						GL.Enable (EnableCap.Blend);
-						//QFont.Begin();
-						//string text = Convert.ToString(engine.score);
-						//SizeF len = game.scoreFont.Measure(text);
-						//Label score = new Label(text,game.scoreFont, new Vector2(game.Width - (len.Width + 50f), 20.0f));
-						//score.draw();
-
-
-						//game.scoreWriter.Draw();
-						//GL.Enable(EnableCap.Texture2D);
-						//GL.PopMatrix();
-						//GL.Clear(ClearBufferMask.DepthBufferBit);
-						//GL.Disable(EnableCap.Blend);
-						//QFont.Begin();
-//					game.buttonWriter.Clear();
-//					game.buttonWriter.AddLine("test", new PointF(100.0f,20.0f), new SolidBrush(Color.White));
-//					game.buttonWriter.Draw();
+	
 						game.menuPane.DrawText ();
 						engine.draw();
 					}
-					//GL.Disable(EnableCap.Texture2D);
-				
-					//GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
 					game.SwapBuffers ();
 				};

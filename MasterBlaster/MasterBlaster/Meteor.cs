@@ -215,10 +215,6 @@ namespace MasterBlaster
             dpy = vy * dt;
 
             //compute the new positions and correct if off the edge of the screen.
-            //pos[0] = Engine.glrange(pos[0] + dpx);
-            //pos[1] = Engine.glrange(pos[1] + dpy);
-			//pos[0] = Engine.glrange(pos[0] + dpx, Engine.ViewX + maxrad);
-			//pos[1] = Engine.glrange(pos[1] + dpy, Engine.ViewY + maxrad);
 			pos [0] = shadowWarp (pos [0] + dpx, Engine.ViewX);
 			pos [1] = shadowWarp (pos [1] + dpy, Engine.ViewY);
 

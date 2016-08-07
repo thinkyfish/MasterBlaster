@@ -108,14 +108,6 @@ namespace MasterBlaster
 
 		public static float glrange(float a, float bound = 1.0f)
         {
-            //if (a > 1.015625f)
-            //    a -= 2.03125f;
-            //else if (a < -1.015625f)
-            //    a += 2.03125f;
-            //if (a < 1.015625f && a > -1.015625f)
-            //    return a;
-            //else
-            //    return -2f;
             if (a > bound)
                 a -= 2.0f*bound;
             else if (a < -bound)

@@ -13,7 +13,7 @@ using System.Drawing.Text;
 namespace MasterBlaster
 {
 	public enum WindowMode {Menu, Game, Settings, NewGame};
-    //private Engine engine;
+    
     class MBGameWindow : GameWindow
     {
 
@@ -30,7 +30,6 @@ namespace MasterBlaster
 			pfc = new PrivateFontCollection ();
 			pfc.AddFontFile ("Fonts/Anonymous Pro.ttf");
 			families = pfc.Families;
-			//this.setupButtonFont ();
 			this.setupFonts ();
 
 		}
@@ -44,7 +43,6 @@ namespace MasterBlaster
 		}
 		public void paneSetup(){
 			menuPane = new Pane (new RectangleF (-0.75f, -0.75f, 1.5f, 1.5f));
-			//GameToView(0f, 0.5f)
 			this.setupFonts ();
 			menuPane.addLabel (new Label ("MasterBlaster", menuWriter,GameToView (0f,0.6f)));
 			menuPane.addButton (new Button ("Start New Game", buttonWriter, GameToView (0f, 0.4f)));
