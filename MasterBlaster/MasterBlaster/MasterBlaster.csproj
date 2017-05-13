@@ -37,12 +37,9 @@
     </Reference>
     <Reference Include="System.Drawing" />
     <Reference Include="OpenTK">
-<<<<<<< Updated upstream
       <HintPath>..\Dependencies\OpenTK.dll</HintPath>
       <Private>False</Private>
-=======
       <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
->>>>>>> Stashed changes
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,11 +54,7 @@
     <Compile Include="Button.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Pane.cs" />
-<<<<<<< Updated upstream
-    <Compile Include="TextWriter.cs" />
-=======
     <Compile Include="ScoreWriter.cs" />
->>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
