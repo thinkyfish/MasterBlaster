@@ -18,12 +18,10 @@ namespace MasterBlaster
 		public static void Main ()
 		{
 			Engine engine = new Engine (8);
-
 			using (var game = new MBGameWindow ()) {
 				game.Load += (sender, e) => {
 					// setup settings, load textures, sounds
 					game.VSync = VSyncMode.On;
-					game.LoadFonts ();
 					game.paneSetup ();
 					game.Mode = WindowMode.Game;
 				};
@@ -38,46 +36,61 @@ namespace MasterBlaster
 
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
+<<<<<<< Updated upstream
 					game.scoreWriter.Dispose ();
 					game.buttonWriter.Dispose ();
 					game.menuPane.Dispose ();
+=======
+					//game.scoreWriter.Dispose ();
+					//game.buttonWriter.Dispose ();
+					//game.menuPane.Dispose ();
+>>>>>>> Stashed changes
 
 
 					game.paneSetup ();
 
+<<<<<<< Updated upstream
 					game.scoreWriter.setClientSize (new Size (game.Width, game.Height));
 					game.buttonWriter.setClientSize (new Size (game.Width, game.Height));
 					game.menuWriter.setClientSize (new Size (game.Width, game.Height));
 					//GL.Viewport(0, 0, game.Width, game.Height);
+=======
+					//game.scoreWriter.SetClientSize(game.Size);
+					//game.testlabel.SetClientSize(game.Size);
+					//game.buttonWriter.setClientSize (new Size (game.Width, game.Height));
+					////GL.Viewport(0, 0, game.Width, game.Height);
+>>>>>>> Stashed changes
 
 				};
-				game.KeyDown += (sender, e) => {
-					switch (e.Key) {
-					case Key.Space:
-						engine.startfiring ();
-						break;
-					case Key.W:
-						engine.startThrusting (1.0f);
-						break;
-					case Key.S:
-						engine.startThrusting (-1.0f);
-						break;
-					case Key.A:
-						engine.startTurning (1.0f);
-						break;
-					case Key.D:
-						engine.startTurning (-1.0f);
-						break;
-					case Key.M:
-						game.Mode = WindowMode.Menu;
-						break;
-					case Key.G:
-						game.Mode = WindowMode.Game;
-						break;
-					default:
-						break;
+				game.KeyDown += (sender, e) =>
+				{
+					switch (e.Key)
+					{
+						case Key.Space:
+							engine.startfiring();
+							break;
+						case Key.W:
+							engine.startThrusting(1.0f);
+							break;
+						case Key.S:
+							engine.startThrusting(-1.0f);
+							break;
+						case Key.A:
+							engine.startTurning(1.0f);
+							break;
+						case Key.D:
+							engine.startTurning(-1.0f);
+							break;
+						case Key.M:
+							game.Mode = WindowMode.Menu;
+							break;
+						case Key.G:
+							game.Mode = WindowMode.Game;
+							break;
+						default:
+							break;
 					}
-
+					game.menuPane.KeyHandler(e.Key);
 				};
 				game.KeyUp += (sender, e) => {
 					switch (e.Key) {
@@ -137,12 +150,16 @@ namespace MasterBlaster
 
 
 					if (engine.scorechanged) {
+<<<<<<< Updated upstream
 
 						game.scoreWriter.Clear ();
 
 						game.scoreWriter.AddLine (Convert.ToString (engine.score),
 							new PointF (game.Width - 20f, 20.0f),
 							new SolidBrush (Color.White));
+=======
+ 						game.scoreWriter.SetText(Convert.ToString(engine.score));
+>>>>>>> Stashed changes
 					}
 
 
@@ -153,17 +170,24 @@ namespace MasterBlaster
 					if (game.Mode == WindowMode.Game) {
 					
 						engine.draw ();
+<<<<<<< Updated upstream
 						game.scoreWriter.Draw ();
+=======
+						game.scoreWriter.Draw (game.Size);
+						//game.testlabel.Draw();
+
+>>>>>>> Stashed changes
 					}
 					if (game.Mode == WindowMode.Menu) {
+						
+						game.menuPane.Draw ();
 
-						game.menuPane.draw ();
+						//GL.BlendFunc (BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrcAlpha);
+						//GL.Enable (EnableCap.Blend);
 
-						GL.BlendFunc (BlendingFactorSrc.SrcAlphaSaturate, BlendingFactorDest.OneMinusSrcAlpha);
-						GL.Enable (EnableCap.Blend);
-	
-						game.menuPane.DrawText ();
+						game.menuPane.DrawText (game.Size);
 						engine.draw();
+
 					}
 
 					game.SwapBuffers ();

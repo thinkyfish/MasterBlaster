@@ -4,44 +4,69 @@ using System.Collections;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing;
-
+using StringTextureGL;
 namespace MasterBlaster
 {
 	public class Label
 	{
 		private string text;
-		private TextWriter writer;
+		private  StringTexture labeltexture;
 		public PointF location;
-		private SizeF size;
-		private Brush brush;
-		public Label (string text, TextWriter writer, Vector2 location)
+		private SizeF labelsize;
+		private Size clientSize;
+		private Font labelfont;
+		public Label (string text, Font font, PointF location)
 		{
-			this.writer = writer;
+			
 			this.text = text;
-			this.location = new PointF (location.X, location.Y);
-			this.brush = new SolidBrush (Color.White);
-			//this.writer.AddLine (text, this.location, brush);
+			this.location = location;
+			this.labelfont = font;
+			this.labeltexture = new StringTexture (this.text,font, Color.White, Color.DarkRed );
 
 		}
-		public virtual void draw(){
-			writer.Clear ();
-			writer.AddLine (text, location, brush);
-			GL.Disable(EnableCap.DepthTest);
-			//GL.ClearDepth(1.0f);
-			writer.Draw ();
-//				GL.ClearDepth(0.0);
-//				GL.Disable(EnableCap.Texture2D);
-//				GL.Disable( EnableCap.Blend );
-//				//GL.Enable(EnableCap.Texture2D);
+		public void SetClientSize(Size newSize){
+			this.clientSize = newSize;
+		}
 
-				//font.Options.UseDefaultBlendFunction = true;
-				//GL.Enable( EnableCap.Blend );
+		public virtual void Draw(Size clientSize, float Depth = 1.0f)
+		{
+			Size size = labeltexture.Size();
+			//PointF location = new PointF(clientSize.Width - 20 - size.Width, 20);
 
-			//GL.Disable(EnableCap.Texture2D);	
+
+
+			Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0, clientSize.Width, clientSize.Height, 0, -1, 1);
+			GL.MatrixMode(MatrixMode.Projection);
+
+			GL.PushMatrix();
+			GL.LoadMatrix(ref ortho_projection);
+
+			GL.Enable(EnableCap.Blend);
+			GL.BlendFunc(BlendingFactorSrc.SrcAlpha, BlendingFactorDest.OneMinusSrcAlpha);
+			GL.Enable(EnableCap.Texture2D);
+
+
+
+			GL.BindTexture(TextureTarget.Texture2D, labeltexture.TextureId());
+			GL.Begin(PrimitiveType.Quads);
+			GL.TexCoord2(0, 0);
+			GL.Vertex3(location.X, location.Y, Depth);
+			GL.TexCoord2(1, 0);
+			GL.Vertex3(location.X + size.Width, location.Y, Depth);
+			GL.TexCoord2(1, 1);
+			GL.Vertex3(location.X + size.Width, location.Y + size.Height, Depth);
+			GL.TexCoord2(0, 1);
+			GL.Vertex3(location.X, location.Y + size.Height, Depth);
+
+			GL.End();
+
+			GL.PopMatrix();
+
+			GL.Disable(EnableCap.Texture2D);
 
 		}
 		public void Dispose(){
-			this.writer.Dispose ();
+			//this.writer.Dispose ();
 		}
 
 	}

@@ -139,13 +139,12 @@ namespace MasterBlaster
 
 		public void Draw()
 		{
-			//GL.PushMatrix();
-			//GL.LoadIdentity();
+
 
 			Matrix4 ortho_projection = Matrix4.CreateOrthographicOffCenter(0, _clientSize.Width, _clientSize.Height, 0, -1, 1);
 			GL.MatrixMode(MatrixMode.Projection);
 
-			GL.PushMatrix();//
+			GL.PushMatrix();
 			GL.LoadMatrix(ref ortho_projection);
 			//GL.Disable(EnableCap.DepthTest);
 			GL.Enable(EnableCap.Blend);
@@ -167,11 +166,8 @@ namespace MasterBlaster
 			//GL.Clear(ClearBufferMask.DepthBufferBit);
 			GL.PopMatrix();
 
-			//GL.Disable(EnableCap.Blend);
 			GL.Disable(EnableCap.Texture2D);
-			//GL.Disable (EnableCap.DepthTest);
-			//GL.MatrixMode(MatrixMode.Modelview);
-			//GL.PopMatrix();
+
 		}
 	}
 }

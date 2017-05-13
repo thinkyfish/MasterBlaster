@@ -11,7 +11,7 @@
     <AssemblyName>MasterBlaster</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,17 +35,14 @@
     <Reference Include="System">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
     <Reference Include="OpenTK">
+<<<<<<< Updated upstream
       <HintPath>..\Dependencies\OpenTK.dll</HintPath>
       <Private>False</Private>
+=======
+      <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+>>>>>>> Stashed changes
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -60,16 +57,29 @@
     <Compile Include="Button.cs" />
     <Compile Include="Label.cs" />
     <Compile Include="Pane.cs" />
+<<<<<<< Updated upstream
     <Compile Include="TextWriter.cs" />
+=======
+    <Compile Include="ScoreWriter.cs" />
+>>>>>>> Stashed changes
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Fonts\Anonymous Pro.ttf">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="Fonts\InputMonoNarrow-Thin.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="OpenTK.dll.config" />
+    <None Include="packages.config" />
+    <None Include="Fonts\Simplex.ttf">
+      <DeployService-Deploy>True</DeployService-Deploy>
+      <DeployService-HasPathReferences>True</DeployService-HasPathReferences>
+      <DeployService-UseProjectRelativePath>True</DeployService-UseProjectRelativePath>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Fonts\Anonymous Pro.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Fonts\CHECKBK0.TTF" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -83,11 +93,9 @@
     <Folder Include="Fonts\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Fonts\Simplex.ttf">
-      <DeployService-Deploy>True</DeployService-Deploy>
-      <DeployService-HasPathReferences>True</DeployService-HasPathReferences>
-      <DeployService-UseProjectRelativePath>True</DeployService-UseProjectRelativePath>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    <ProjectReference Include="..\..\..\StringTextureGL\StringTextureGL\StringTextureGL.csproj">
+      <Project>{96B89360-A634-41F2-A5E5-BC6511D4C120}</Project>
+      <Name>StringTextureGL</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

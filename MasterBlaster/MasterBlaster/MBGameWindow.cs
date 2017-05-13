@@ -8,7 +8,7 @@ using System.Drawing;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System.Drawing.Text;
-
+using StringTextureGL;
 
 namespace MasterBlaster
 {
@@ -19,19 +19,22 @@ namespace MasterBlaster
 
 		public bool resize = false;
 		public Pane menuPane;
+<<<<<<< Updated upstream
 		public TextWriter scoreWriter;
 		public TextWriter buttonWriter;
 		public TextWriter menuWriter;
 		private PrivateFontCollection pfc;
 		private FontFamily[] families;
+=======
+		public ScoreWriter scoreWriter;
+		private Font labelfont;
+
+
+>>>>>>> Stashed changes
 
 		public WindowMode Mode;
-		public void LoadFonts(){
-			pfc = new PrivateFontCollection ();
-			pfc.AddFontFile ("Fonts/Anonymous Pro.ttf");
-			families = pfc.Families;
-			this.setupFonts ();
 
+<<<<<<< Updated upstream
 		}
 		public void setupFonts(){
 			buttonWriter = new TextWriter (new Font(families[0], 20),
@@ -46,9 +49,23 @@ namespace MasterBlaster
 			this.setupFonts ();
 			menuPane.addLabel (new Label ("MasterBlaster", menuWriter,GameToView (0f,0.6f)));
 			menuPane.addButton (new Button ("Start New Game", buttonWriter, GameToView (0f, 0.4f)));
+=======
+		public MBGameWindow() : base(){
+			this.scoreWriter = new ScoreWriter();
+			this.labelfont = StringTexture.NewFont("Fonts/Simplex.ttf", "Simplex", 30, FontStyle.Bold);
+
 		}
-		public Vector2 GameToView(float x, float y){
-			return new Vector2 ((Width / (2.0f * Engine.ViewX)) * (x + Engine.ViewX),
+
+		public void paneSetup(){
+			menuPane = new Pane (new RectangleF (-0.6f, -0.6f, 1.0f, 1.0f));
+			//this.setupFonts ();
+			menuPane.addLabel (new Label ("MasterBlaster", this.labelfont, GameToView(-0.5f, -1.0f)));//GameToView (0f,0.6f)));
+			menuPane.addButton (new Button ("Start New Game", this.labelfont, GameToView (-0.5f, 0.4f)));
+			//testlabel = new Label("Test", new Font(families[0], 30), new PointF(0,0));
+>>>>>>> Stashed changes
+		}
+		public PointF GameToView(float x, float y){
+			return new PointF ((Width / (2.0f * Engine.ViewX)) * (x + Engine.ViewX),
 				(- Height / (2.0f * Engine.ViewY)) * ( y - Engine.ViewY));
 		}
     }	

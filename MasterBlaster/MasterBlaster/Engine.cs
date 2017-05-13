@@ -139,7 +139,7 @@ namespace MasterBlaster
 
         private bool cyclebullet()
         {
-            bool fire = false;
+            fire = false;
 
 			if (bulletcycle == 0)
 				fire = true;
@@ -303,7 +303,6 @@ namespace MasterBlaster
             //remove dead meteors
             meteorlist.RemoveAll(m => m.health <= 0.0f);
             //check for meteor collisions
-            //TODO
 
             //go up to the next level if there are no meteors left
             if(meteorlist.Count == 0)
