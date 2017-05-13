@@ -36,30 +36,16 @@ namespace MasterBlaster
 
 					Engine.ViewY = 1.0f;
 					Engine.ViewX = 1.0f * game.Width / game.Height;
-<<<<<<< Updated upstream
-					game.scoreWriter.Dispose ();
-					game.buttonWriter.Dispose ();
-					game.menuPane.Dispose ();
-=======
 					//game.scoreWriter.Dispose ();
 					//game.buttonWriter.Dispose ();
 					//game.menuPane.Dispose ();
->>>>>>> Stashed changes
 
+					//game.paneSetup ();
 
-					game.paneSetup ();
-
-<<<<<<< Updated upstream
-					game.scoreWriter.setClientSize (new Size (game.Width, game.Height));
-					game.buttonWriter.setClientSize (new Size (game.Width, game.Height));
-					game.menuWriter.setClientSize (new Size (game.Width, game.Height));
-					//GL.Viewport(0, 0, game.Width, game.Height);
-=======
 					//game.scoreWriter.SetClientSize(game.Size);
 					//game.testlabel.SetClientSize(game.Size);
 					//game.buttonWriter.setClientSize (new Size (game.Width, game.Height));
 					////GL.Viewport(0, 0, game.Width, game.Height);
->>>>>>> Stashed changes
 
 				};
 				game.KeyDown += (sender, e) =>
@@ -150,16 +136,7 @@ namespace MasterBlaster
 
 
 					if (engine.scorechanged) {
-<<<<<<< Updated upstream
-
-						game.scoreWriter.Clear ();
-
-						game.scoreWriter.AddLine (Convert.ToString (engine.score),
-							new PointF (game.Width - 20f, 20.0f),
-							new SolidBrush (Color.White));
-=======
  						game.scoreWriter.SetText(Convert.ToString(engine.score));
->>>>>>> Stashed changes
 					}
 
 
@@ -170,13 +147,11 @@ namespace MasterBlaster
 					if (game.Mode == WindowMode.Game) {
 					
 						engine.draw ();
-<<<<<<< Updated upstream
-						game.scoreWriter.Draw ();
-=======
+
 						game.scoreWriter.Draw (game.Size);
 						//game.testlabel.Draw();
 
->>>>>>> Stashed changes
+
 					}
 					if (game.Mode == WindowMode.Menu) {
 						
